@@ -1,0 +1,2 @@
+
+set foldnestmax=6

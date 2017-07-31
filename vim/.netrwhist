@@ -1,0 +1,7 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =5
+let g:netrw_dirhist_1='/Users/xaero/lamoda/git/steuern/host_vars'
+let g:netrw_dirhist_2='/Users/xaero/lamoda/git/master-dns'
+let g:netrw_dirhist_3='/Users/xaero/lamoda'
+let g:netrw_dirhist_4='/Users/xaero/.oh-my-zsh/themes'
+let g:netrw_dirhist_5='/Users/xaero'
