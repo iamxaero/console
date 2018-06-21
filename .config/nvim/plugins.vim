@@ -19,6 +19,20 @@ endfor
 
 call dein#end()
 
+if &compatible
+ set nocompatible
+endif
+
+call dein#save_state()
+
+for f in split(glob('~/.config/nvim/plugins/*.vim'), '\n')
+  exec "source " . f
+endfor
+
+
+filetype plugin indent on
+syntax enable
+
 "Filetype plugin indent on is required by vundle
 filetype plugin indent on
 

@@ -1,3 +1,6 @@
+let g:python_host_prog = '/Users/xaero/.pyenv/versions/neovim2/bin/python'
+let g:python3_host_prog = '/Users/xaero/.pyenv/versions/neovim3/bin/python'
+
 " Use Vim settings, rather then Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
 set nocompatible
