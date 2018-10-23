@@ -1,5 +1,6 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:/opt/local/bin/:/opt/local/sbin/:/Library/Frameworks/Python.framework/Versions/2.7/bin/:$PATH
+#export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:/opt/local/bin/:/opt/local/sbin/:/Library/Frameworks/Python.framework/Versions/2.7/bin/:$PATH
+export PATH="/usr/local/bin:/usr/local/sbin:/opt/local/bin/:/opt/local/sbin/:/Library/Frameworks/Python.framework/Versions/2.7/bin/:$PATH"
 
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/xaero/.oh-my-zsh
