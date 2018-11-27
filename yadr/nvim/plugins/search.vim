@@ -1,0 +1,6 @@
+call dein#add("justinmk/vim-sneak")
+call dein#add("rking/ag.vim")
+call dein#add("vim-scripts/IndexedSearch")
+call dein#add("nelstrom/vim-visual-star-search")
+call dein#add("skwp/greplace.vim")
+call dein#add("Lokaltog/vim-easymotion")

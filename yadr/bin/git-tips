@@ -1,0 +1,9 @@
+#!/bin/bash
+TIPS=$( git rev-list --remotes --children | grep -v ' ' | sort )
+for remote in $(git remote); do
+{
+  while read commitid branchname; do
+    grep $commitid < <(echo $TIPS) -q && echo "$remote/${branchname##*/}"
+      done
+} < <(git ls-remote --heads $remote)
+done

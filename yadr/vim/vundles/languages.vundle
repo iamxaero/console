@@ -1,0 +1,21 @@
+Bundle 'sheerun/vim-polyglot'
+Bundle 'garbas/vim-snipmate.git'
+Bundle 'honza/vim-snippets'
+Bundle 'jtratner/vim-flavored-markdown.git'
+Bundle 'scrooloose/syntastic.git'
+Bundle 'nelstrom/vim-markdown-preview'
+Bundle 'skwp/vim-html-escape'
+
+Bundle 'briancollins/vim-jst'
+Bundle 'pangloss/vim-javascript'
+Bundle 'othree/javascript-libraries-syntax.vim'
+Bundle 'tpope/vim-haml'
+Bundle 'wting/rust.vim'
+Bundle 'fatih/vim-go'
+Bundle 'Glench/Vim-Jinja2-Syntax'
+Bundle 'nikvdp/ejs-syntax'
+Bundle 'mephux/vim-jsfmt'
+
+Bundle 'evanmiller/nginx-vim-syntax'
+
+Bundle 'rizzatti/dash.vim'
