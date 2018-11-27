@@ -4,7 +4,7 @@ export PATH="/usr/local/bin:/usr/local/sbin:/opt/local/bin/:/opt/local/sbin/:/Li
 
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/xaero/.oh-my-zsh
-
+export LC_ALL=en_US.UTF-8
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
