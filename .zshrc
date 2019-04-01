@@ -1,7 +1,11 @@
 # If you come from bash you might have to change your $PATH.
 #export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:/opt/local/bin/:/opt/local/sbin/:/Library/Frameworks/Python.framework/Versions/2.7/bin/:$PATH
-export PATH="/usr/local/bin:/usr/local/sbin:/opt/local/bin/:/opt/local/sbin/:/Library/Frameworks/Python.framework/Versions/2.7/bin/:$PATH"
+export PATH="/usr/local/bin:/usr/local/sbin:/opt/local/bin/:/opt/local/sbin/:/Library/Frameworks/Python.framework/Versions/3.7/bin/:$PATH"
 
+# for python envirompments
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/xaero/.oh-my-zsh
 export LC_ALL=en_US.UTF-8
@@ -52,7 +56,7 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git osx python fasd)
+plugins=(git osx python docker docker-compose docker-machine brew colorize helm history iterm2 jsontools pip pyenv vault virtualenv ansible branch django github gitignore rsync salt sudo zsh-autosuggestions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
