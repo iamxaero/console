@@ -1,4 +1,5 @@
 # If you come from bash you might have to change your $PATH.
+ZSH_DISABLE_COMPFIX=true
 #export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:/opt/local/bin/:/opt/local/sbin/:/Library/Frameworks/Python.framework/Versions/2.7/bin/:$PATH
 export PATH="/usr/local/bin:/usr/local/sbin:/opt/local/bin/:/opt/local/sbin/:/Library/Frameworks/Python.framework/Versions/3.7/bin/:$PATH"
 
@@ -56,7 +57,34 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git osx python docker docker-compose docker-machine brew colorize helm history iterm2 jsontools pip pyenv vault virtualenv ansible branch django github gitignore rsync salt sudo zsh-syntax-highlighting zsh-autosuggestions )
+plugins=(
+  git
+  osx
+  python
+  docker
+  docker-compose
+  docker-machine
+  brew
+  colorize
+  helm
+  history
+  iterm2
+  jsontools
+  pip
+  pyenv
+  vault
+  virtualenv
+  ansible
+  branch
+  django
+  github
+  gitignore
+  rsync
+  salt
+  sudo
+  zsh-syntax-highlighting
+  zsh-autosuggestions
+)
 
 source $ZSH/oh-my-zsh.sh
 
