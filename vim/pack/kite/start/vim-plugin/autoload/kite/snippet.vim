@@ -1,38 +1,54 @@
-" stack:
-"  [
-"    { index: 0, placeholders: { ... } },    <-- depth 0
-"    { index: 0, placeholders: { ... } },    <-- depth 1
-"    ...                                     <-- depth n
-"  ]
-"
-"  index - the currently active placeholder at that depth
-let b:kite_stack = {'stack': []}
+function! s:setup_stack()
+  if exists('b:kite_stack') | return | endif
 
-function! b:kite_stack.pop()
-  return remove(self.stack, -1)
-endfunction
+  " stack:
+  "  [
+  "    { index: 0, placeholders: { ... } },    <-- depth 0
+  "    { index: 0, placeholders: { ... } },    <-- depth 1
+  "    ...                                     <-- depth n
+  "  ]
+  "
+  "  index - the currently active placeholder at that depth
+  let b:kite_stack = {'stack': []}
 
-function! b:kite_stack.peek()
-  return get(self.stack, -1)
-endfunction
+  function! b:kite_stack.pop()
+    return remove(self.stack, -1)
+  endfunction
 
-function! b:kite_stack.push(item)
-  call add(self.stack, a:item)
-endfunction
+  function! b:kite_stack.peek()
+    return get(self.stack, -1)
+  endfunction
 
-function! b:kite_stack.is_empty()
-  return empty(self.stack)
-endfunction
+  function! b:kite_stack.push(item)
+    call add(self.stack, a:item)
+  endfunction
 
-function! b:kite_stack.empty()
-  let self.stack = []
+  function! b:kite_stack.is_empty()
+    return empty(self.stack)
+  endfunction
+
+  function! b:kite_stack.empty()
+    let self.stack = []
+  endfunction
 endfunction
 
 
 function! kite#snippet#complete_done()
   if empty(v:completed_item) | return | endif
+  call s:setup_stack()
 
-  let placeholders = json_decode(v:completed_item.user_data)
+  if has_key(v:completed_item, 'user_data') && !empty(v:completed_item.user_data)
+    let placeholders = json_decode(v:completed_item.user_data).placeholders
+  elseif exists('b:kite_completions') && has_key(b:kite_completions, v:completed_item.word)
+    let placeholders = json_decode(b:kite_completions[v:completed_item.word]).placeholders
+    let b:kite_completions = {}
+  else
+    return
+  endif
+
+  " Send the edit event.  Normally this is sent automatically on TextChanged(I).
+  " But for some reason this doesn't fire when a completion has a snippet placeholder.
+  call kite#events#event('edit')
 
   if empty(placeholders)
     if b:kite_stack.is_empty()
@@ -150,6 +166,11 @@ function! s:placeholder(index)
   " store line length before placeholder gets changed by user
   " let b:kite_line_length = col('$')
 
+  if ph.length == 0
+    normal! h
+    return
+  endif
+
   " insert mode -> normal mode
   stopinsert
 
@@ -167,6 +188,7 @@ endfunction
 function! s:goto_initial_completion_end()
   " call setpos('.', [0, b:kite_linenr, b:kite_insertion_end + col('$') - b:kite_line_length - 1])
   call setpos('.', [0, b:kite_linenr, col('$')])
+  startinsert!
   call s:teardown()
 endfunction
 
@@ -368,7 +390,7 @@ endfunction
 
 function! s:insertleave()
   " Modes established by experimentation.
-  if mode(1) !=# 's' && mode(1) !=# (has('patch-8.1.0225') ? 'niI' : 'n')
+  if mode(1) !=# 's' && mode(1) !=# ((has('patch-8.1.0225') || has('nvim-0.4.0')) ? 'niI' : 'n')
     call s:teardown()
   endif
 endfunction

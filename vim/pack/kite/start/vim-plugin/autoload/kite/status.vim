@@ -7,14 +7,17 @@ function! kite#status#status(...)
   let buf = bufnr('')
   let msg = 'NOT SET'
 
-  if !kite#utils#logged_in()
-    let msg = 'Kite: not logged in'
-    if !kite#utils#kite_installed()
-      let msg = 'Kite: not installed'
-    elseif !kite#utils#kite_running()
+  " Check kited status (installed / running) every 10 file status checks.
+  let counter = getbufvar(buf, 'kite_status_counter', 0)
+  if counter == 0
+    if !kite#utils#kite_running()
       let msg = 'Kite: not running'
+      if !kite#utils#kite_installed()
+        let msg = 'Kite: not installed'
+      endif
     endif
   endif
+  call setbufvar(buf, 'kite_status_counter', (counter + 1) % 10)
 
   if wordcount().bytes > kite#max_file_size()
     let msg = 'Kite: file too large'
@@ -39,20 +42,11 @@ function! kite#status#handler(buffer, response)
 
   let json = json_decode(a:response.body)
 
-  " indexing | ready | noIndex
-  let status = json.status
   let msg = ''
 
-  if status == 'ready'
-    let msg = 'Kite'
-  endif
-
-  if status == 'indexing'
-    let msg = 'Kite: indexing'
-  endif
-
-  if status == 'noIndex'
-    let msg = 'Kite: ready (unindexed)'
+  let suffix = get(json, 'short', 'FIELD MISSING')
+  if suffix !=# 'FIELD MISSING'
+    let msg = join(['Kite: ', suffix], '')
   endif
 
   if msg !=# getbufvar(a:buffer, 'kite_status')

@@ -20,7 +20,7 @@ function! kite#events#event(action)
   if [sel_start, sel_end] == [-1, -1]
     return
   endif
-  let selections = [{ 'start': sel_start, 'end': sel_end }]
+  let selections = [{ 'start': sel_start, 'end': sel_end, 'encoding': 'utf-32' }]
 
   let json = json_encode({
         \ 'source':     'vim',
@@ -41,6 +41,6 @@ endfunction
 function! kite#events#handler(bufnr, response)
   let s:events_pending -= 1
 
-  call setbufvar(a:bufnr, 'kite_skip', a:response.status == 403)
+  call setbufvar(a:bufnr, 'kite_skip', (a:response.status == 0 || a:response.status == 403))
 endfunction
 

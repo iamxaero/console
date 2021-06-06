@@ -29,6 +29,7 @@ plugins=(
   docker
   docker-compose
   docker-machine
+  kubectl
   brew
   colorize
   helm
@@ -55,5 +56,4 @@ source $ZSH/oh-my-zsh.sh
 
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
-
-
+ssh-add ~/.ssh/devops_rsa
