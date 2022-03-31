@@ -9,7 +9,7 @@ export GOPATH="$HOME/go"
 export PATH="/usr/local/bin:/usr/local/sbin:/opt/local/bin/:/opt/local/sbin/:$PYENV_ROOT/bin:$PATH:$HOME/bin"
 # for python envirompments
 if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
+  eval "$(pyenv init --path)"
 fi
 
 # If you come from bash you might have to change your $PATH.
@@ -22,7 +22,10 @@ export LC_ALL=en_US.UTF-8
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="agnoster"
 # ZSH_THEME="powerline"
+
 plugins=(
+  pyenv
+  virtualenv
   git
   osx
   python
@@ -30,6 +33,7 @@ plugins=(
   docker-compose
   docker-machine
   kubectl
+  sublime
   brew
   colorize
   helm
@@ -37,16 +41,9 @@ plugins=(
   iterm2
   jsontools
   pip
-  pyenv
-  vault
-  virtualenv
   ansible
   branch
-  django
   github
-  gitignore
-  rsync
-  salt
   sudo
   zsh-syntax-highlighting
   zsh-autosuggestions
@@ -56,4 +53,6 @@ source $ZSH/oh-my-zsh.sh
 
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
+eval "$(ssh-agent)"
 ssh-add ~/.ssh/devops_rsa
+
