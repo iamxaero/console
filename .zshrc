@@ -16,7 +16,7 @@ fi
 ZSH_DISABLE_COMPFIX=true
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/xaero/.oh-my-zsh
+export ZSH="$HOME/.oh-my-zsh"
 export LC_ALL=en_US.UTF-8
 
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
@@ -27,7 +27,7 @@ plugins=(
   pyenv
   virtualenv
   git
-  osx
+  macos
   python
   docker
   docker-compose
