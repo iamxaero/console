@@ -3,7 +3,11 @@ powerline-daemon -q
 POWERLINE_BASH_CONTINUATION=1
 POWERLINE_BASH_SELECT=1
 source /Users/xaero/.pyenv/versions/3.8.5/envs/3/lib/python3.8/site-packages/powerline/bindings/bash/powerline.sh
-
+export PATH="/usr/local/bin:/usr/local/sbin:/opt/local/bin/:/opt/local/sbin/:$PYENV_ROOT/bin:$PATH:$HOME/bin"
+# for python envirompments
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init --path)"
+fi
 
 # ----------------------
 # Git Aliases
