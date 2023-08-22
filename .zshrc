@@ -1,28 +1,26 @@
+# Set PATH
+export PYENV_ROOT="$HOME/.pyenv"
+export PIPENV_PYTHON="$PYENV_ROOT/shims/python"
+export PATH="/usr/local/bin:/usr/local/sbin:/opt/local/bin/:/opt/local/sbin/:$HOME/bin:"$PYENV_ROOT/bin:$PATH""
+
+# Ansible
 export ANSIBLE_VAULT_PASSWORD_FILE=~/.vault_pass
 export ANSIBLE_LOG_PATH=~/.ansible/ansible.log
 export ANSIBLE_STDOUT_CALLBACK='yaml'
 export ANSIBLE_STRATEGY_PLUGINS=~/.ansible/plugins/mitogen
 
-export PYENV_ROOT="$HOME/.pyenv"
+# Golang
 export GOPATH="$HOME/go"
 
-export PATH="/usr/local/bin:/usr/local/sbin:/opt/local/bin/:/opt/local/sbin/:$PYENV_ROOT/bin:$PATH:$HOME/bin"
-# for python envirompments
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init --path)"
-fi
-
-# If you come from bash you might have to change your $PATH.
+# ZSH
+## If you come from bash you might have to change your $PATH.
 ZSH_DISABLE_COMPFIX=true
-
-# Path to your oh-my-zsh installation.
+## Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 export LC_ALL=en_US.UTF-8
-
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+## See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="agnoster"
-# ZSH_THEME="powerline"
-
+## ZSH_THEME="powerline"
 plugins=(
   pyenv
   virtualenv
@@ -48,11 +46,15 @@ plugins=(
   zsh-syntax-highlighting
   zsh-autosuggestions
 )
-
 source $ZSH/oh-my-zsh.sh
 
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
+# Set Python envirompments
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init --path)"
+  eval "$(pyenv virtualenv-init -)"
+fi
+
+# SSH
+## export SSH_KEY_PATH="~/.ssh/rsa_id"
 eval "$(ssh-agent)"
 ssh-add ~/.ssh/devops_rsa
-
