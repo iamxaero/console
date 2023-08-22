@@ -58,3 +58,7 @@ brew install neovim
 
 # Iterm2 json config
 import from console/iterm/best theme.json
+
+# add plugins for zsh
+git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
