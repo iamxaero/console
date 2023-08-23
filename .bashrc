@@ -18,7 +18,7 @@ export ANSIBLE_STDOUT_CALLBACK='yaml'
 export ANSIBLE_STRATEGY_PLUGINS=~/.ansible/plugins/mitogen
 
 # Golang
-export GOPATH="$HOME/go"
+export GOPATH="$HOME/.go"
 
 # Set Python envirompments
 if command -v pyenv 1>/dev/null 2>&1; then

@@ -10,7 +10,7 @@ export ANSIBLE_STDOUT_CALLBACK='yaml'
 export ANSIBLE_STRATEGY_PLUGINS=~/.ansible/plugins/mitogen
 
 # Golang
-export GOPATH="$HOME/go"
+export GOPATH="$HOME/.go"
 
 # ZSH
 ## If you come from bash you might have to change your $PATH.
