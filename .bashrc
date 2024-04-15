@@ -3,7 +3,7 @@ powerline-daemon -q
 POWERLINE_BASH_CONTINUATION=1
 POWERLINE_BASH_SELECT=1
 # Need to be install: pip install powerline-status
-# and set your global Python versioan in path 
+# and set your global Python versioan in path
 source "$PYENV_VIRTUAL_ENV/lib/python3.11/site-packages/powerline/bindings/bash/powerline.sh"
 
 # Set PATH
@@ -16,6 +16,7 @@ export ANSIBLE_VAULT_PASSWORD_FILE=~/.vault_pass
 export ANSIBLE_LOG_PATH=~/.ansible/ansible.log
 export ANSIBLE_STDOUT_CALLBACK='yaml'
 export ANSIBLE_STRATEGY_PLUGINS=~/.ansible/plugins/mitogen
+export ANSIBLE_CONFIG=~/.ansible/ansible.cfg
 
 # Golang
 export GOPATH="$HOME/.go"
@@ -67,9 +68,3 @@ alias gstd='git stash drop'
 alias gstl='git stash list'
 alias gstp='git stash pop'
 alias gsts='git stash save'
-
-# ----------------------
-# Git Functions
-# ----------------------
-# Git log find by commit message
-function glf() { git log --all --grep="$1"; }

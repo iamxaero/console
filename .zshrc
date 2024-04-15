@@ -8,6 +8,7 @@ export ANSIBLE_VAULT_PASSWORD_FILE=~/.vault_pass
 export ANSIBLE_LOG_PATH=~/.ansible/ansible.log
 export ANSIBLE_STDOUT_CALLBACK='yaml'
 export ANSIBLE_STRATEGY_PLUGINS=~/.ansible/plugins/mitogen
+export ANSIBLE_CONFIG=~/.ansible/ansible.cfg
 
 # Golang
 export GOPATH="$HOME/.go"
@@ -57,4 +58,7 @@ fi
 # SSH
 ## export SSH_KEY_PATH="~/.ssh/rsa_id"
 eval "$(ssh-agent)"
+ssh-add ~/.ssh/hudson-6_rsa
 ssh-add ~/.ssh/devops_rsa
+ssh-add ~/.ssh/zulu_rsa
+ssh-add ~/.ssh/zulu-jenkins_rsa
