@@ -2,6 +2,7 @@
 export PYENV_ROOT="$HOME/.pyenv"
 export PIPENV_PYTHON="$PYENV_ROOT/shims/python"
 export PATH="/usr/local/bin:/usr/local/sbin:/opt/local/bin/:/opt/local/sbin/:$HOME/bin:"$PYENV_ROOT/bin:$PATH""
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 
 # Ansible
 export ANSIBLE_VAULT_PASSWORD_FILE=~/.vault_pass
@@ -12,6 +13,12 @@ export ANSIBLE_CONFIG=~/.ansible/ansible.cfg
 
 # Golang
 export GOPATH="$HOME/.go"
+
+# Set Python envirompments
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init --path)"
+  eval "$(pyenv virtualenv-init -)"
+fi
 
 # ZSH
 ## If you come from bash you might have to change your $PATH.
@@ -48,12 +55,6 @@ plugins=(
   zsh-autosuggestions
 )
 source $ZSH/oh-my-zsh.sh
-
-# Set Python envirompments
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init --path)"
-  eval "$(pyenv virtualenv-init -)"
-fi
 
 # SSH
 ## export SSH_KEY_PATH="~/.ssh/rsa_id"
