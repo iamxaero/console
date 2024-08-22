@@ -91,7 +91,7 @@
     "Blue Component" : 0,
     "Green Component" : 0.53725490196078429
   },
-  "Use Non-ASCII Font" : true,
+  "Use Non-ASCII Font" : false,
   "Link Color" : {
     "Red Component" : 0,
     "Color Space" : "sRGB",
@@ -344,7 +344,7 @@
   "Bound Hosts" : [
 
   ],
-  "Non Ascii Font" : "InconsolataForPowerline-dz 12",
+  "Non Ascii Font" : "Inconsolata-dzForPowerline 11",
   "Ansi 13 Color" : {
     "Red Component" : 0.42352941176470588,
     "Color Space" : "sRGB",

@@ -30,14 +30,21 @@ export LC_ALL=en_US.UTF-8
 ZSH_THEME="agnoster"
 ## ZSH_THEME="powerline"
 plugins=(
+  aws
+  golang
+  pip
   pyenv
+  python
+  pylint
   virtualenv
   git
+  gitfast
   macos
   python
-  docker
-  docker-compose
-  docker-machine
+  command-not-found 
+  zsh-autosuggestions 
+  zsh-syntax-highlighting 
+  history-substring-search
   kubectl
   sublime
   brew
@@ -46,13 +53,24 @@ plugins=(
   history
   iterm2
   jsontools
-  pip
   ansible
   branch
   github
   sudo
+  ssh
+  terraform
+  thefuck
+  vscode
+  sublime
   zsh-syntax-highlighting
   zsh-autosuggestions
+  docker-compose
+  docker
+  helm
+  iterm2
+  kubectl
+  zsh-interactive-cd
+  zsh-navigation-tools
 )
 source $ZSH/oh-my-zsh.sh
 

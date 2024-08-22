@@ -16,6 +16,7 @@ set gcr=a:blinkon0              "Disable cursor blink
 set visualbell                  "No sounds
 set autoread                    "Reload files changed outside vim
 set encoding=utf-8              "Nice symbols in all systems
+set mouse
 
 " This makes vim act like all other editors, buffers can
 " exist in the background without being in a window.
