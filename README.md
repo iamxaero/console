@@ -47,6 +47,21 @@ pyenv virtualenvs
 pyenv virtualenv-delete prj
 ```
 
+# python uv
+```
+# install uv
+brew install uv
+
+# versions
+uv python list
+
+# Install
+uv python install 3.14
+
+# Set default python
+uv python pin --global 3.14
+```
+
 # Install Neovim
 ```
 ln -s .config/nvim ~/.config/nvim
