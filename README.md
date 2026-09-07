@@ -1,6 +1,8 @@
-# Console — Personal DevOps Environment Setup
+# Console — DevOps Environment Setup
 
 > Полный гайд по настройке окружения DevOps-инженера. Все шаги задокументированы для автоматизации.
+
+> **Внимание:** Этот проект не содержит персональных данных. При настройке на новой машине замени плейсхолдеры (email, имя) на свои значения.
 
 ---
 
@@ -21,6 +23,14 @@
 13. [SSH](#13-ssh)
 14. [Git](#14-git)
 15. [Summary — чеклист](#summary---чеклист)
+
+> **Подсказка:** Подробнее по каждому приложению читай в его директории:
+> - [Shell](shell/README.md)
+> - [iTerm2](iterm2/README.md)
+> - [Neovim](neovim/README.md)
+> - [Vim](vim/README.md)
+> - [Ansible](ansible/README.md)
+> - [Git](git/README.md)
 
 ---
 
@@ -66,11 +76,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 
 ### Конфигурация
 
-Скопировать `console/.zshrc` в `~/.zshrc`:
-
-```bash
-ln -s $(pwd)/console/.zshrc ~/.zshrc
-```
+Смотри: [shell/zsh/README.md](shell/zsh/README.md)
 
 #### Ключевые настройки в `.zshrc`:
 
@@ -97,11 +103,10 @@ alias pip3="uv run python -m pip"
 
 ```bash
 eval "$(ssh-agent)" >/dev/null
-if [[ -f "$HOME/.ssh/id_ed25519" ]]; then
-  ssh-add ~/.ssh/id_ed25519
-elif [[ -f "$HOME/.ssh/id_rsa" ]]; then
-  ssh-add ~/.ssh/id_rsa
-fi
+# Добавь свои ключи
+for key in ~/.ssh/id_ed25519 ~/.ssh/id_rsa; do
+  [[ -f "$key" ]] && ssh-add "$key"
+done
 ```
 
 ## 4. Shell plugins
@@ -118,10 +123,10 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/
 
 ```bash
 # Readline config (bash, python REPL и др.)
-ln -sf $(pwd)/console/.inputrc ~/.inputrc
+ln -sf $(pwd)/console/shell/.inputrc ~/.inputrc
 
 # Bash (если используется)
-ln -sf $(pwd)/console/.bashrc ~/.bashrc
+ln -sf $(pwd)/console/shell/bash/.bashrc ~/.bashrc
 ```
 
 ### `.inputrc`
@@ -149,49 +154,22 @@ rm -rf fonts
 
 ### Полный конфиг
 
-Файл: `console/iterm/iterm2-full-config/Settings.json`
+Смотри: [iterm2/README.md](iterm2/README.md)
 
-Полный экспорт из `~/Library/Preferences/com.googlecode.iterm2.plist`. Содержит все профили, глобальные настройки, AI-конфигурацию, переменные.
+### Установка
 
-#### Установка
+Импорт `iterm2-full-config/Settings.json` через GUI iTerm2:
+- iTerm2 → Settings → General → перетащи Settings.json
+- **Import...** → выбери файл
 
-1. Скопируй файл на новую машину:
-```bash
-cp console/iterm/iterm2-full-config/Settings.json /tmp/iterm2-new.json
-```
+### Обновление конфига
 
-2. В iTerm2:
-   - iTerm2 → Settings → General
-   - Перетащи `iterm2-new.json` в окно настроек
-   - Или: **Import...** → выбери файл
-
-3. Перезапусти iTerm2: `killall iTerm2`
-
-#### 2 профиля в конфиге
-
-| Профиль | Шрифт | Колонки/Строки | Guid |
-|---|---|---|---|
-| **Default** (базовый) | Monaco 12 | 80/25 | `F2610AC3-706C-4C2A-BB20-F284D51E4296` |
-| **best theme** (рабочий) | InconsolataForPowerline-dz 12 | 176/40 | `132AB47A-ACD5-4BFD-9100-A0AA285E3AEF` |
-
-**best theme** — твой основной профиль с кастомной тёмной палитрой, keyboard map и статус-баром.
-
-#### Обновление конфига после изменений
-
-Когда вносишь изменения в iTerm2 — экспортируй обратно:
+Когда вносишь изменения в iTerm2 — экспортируй:
 
 ```bash
-defaults read /Users/vk/Library/Preferences/com.googlecode.iterm2 \
-  > console/iterm/iterm2-full-config/Settings.json
+defaults read ~/Library/Preferences/com.googlecode.iterm2 \
+  > console/iterm2/iterm2-full-config/Settings.json
 ```
-
-#### Старый файл (устарел)
-
-`console/iterm/best theme.json` — старый дамп одного профиля. Теперь не нужен, полный конфиг в `iterm2-full-config/Settings.json`.
-
-#### Подробная документация
-
-Полный разбор конфига (цвета, keyboard map, переменные, AI-настройки): [console/iterm/iterm2-full-config/README.md](iterm/iterm2-full-config/README.md)
 
 ## 8. Python (uv)
 
@@ -299,7 +277,7 @@ brew install vim
 
 ```bash
 # Основной конфиг
-ln -sf $(pwd)/console/vimrc ~/.vimrc
+ln -sf $(pwd)/console/vim/.vimrc ~/.vimrc
 
 # Bundle-директория (Vundle)
 ln -sf $(pwd)/console/vim ~/.vim
@@ -339,8 +317,8 @@ brew install ansible
 mkdir -p ~/.ansible
 ln -sf $(pwd)/console/ansible/ansible.cfg ~/.ansible/ansible.cfg
 
-# Vault password (Создать вручную!)
-echo "your_vault_password" > ~/.vault_pass
+# Vault password (НЕ коммить этот файл!)
+openssl rand -base64 32 > ~/.vault_pass
 chmod 600 ~/.vault_pass
 ```
 
@@ -356,7 +334,7 @@ chmod 600 ~/.vault_pass
 | `timeout` | 60 |
 | `transport` | ssh |
 | `pipelining` | True |
-| `vault_password_file` | `~/.vault_pass` |
+| `vault_password_file` | `~/.vault_pass` (создать вручную) |
 | `inventory` | `inventory` (относительно ~/.ansible) |
 | `library` | `library/modules` |
 | `roles_path` | `roles/vendor` |
@@ -388,8 +366,8 @@ mkdir -p ~/.go
 ### Установка конфига
 
 ```bash
-# Symlink gitconfig
-ln -sf $(pwd)/console/configs/gitconfig ~/.gitconfig
+# Symlink
+ln -sf $(pwd)/console/git/gitconfig ~/.gitconfig
 ```
 
 ### Ключевые настройки `.gitconfig`:
@@ -418,7 +396,6 @@ ln -sf $(pwd)/console/configs/gitconfig ~/.gitconfig
 
 1. `~/.ssh/id_ed25519` (приоритет)
 2. `~/.ssh/id_rsa` (fallback)
-3. `~/.ssh/devops_rsa` (из старого `.bashrc`)
 
 **Что нужно сделать вручную:**
 
@@ -439,9 +416,9 @@ ssh-keygen -t ed25519 -C "devops@example.com"
 | 2 | Homebrew | `brew install` | ☐ |
 | 3 | zsh + Oh-My-Zsh | `brew install zsh`, install script | ☐ |
 | 4 | Shell plugins | git clone autosuggestions, syntax-highlighting | ☐ |
-| 5 | Symlink `.zshrc` | `ln -sf console/.zshrc ~/.zshrc` | ☐ |
-| 6 | Symlink `.inputrc` | `ln -sf console/.inputrc ~/.inputrc` | ☐ |
-| 7 | Symlink `.bashrc` | `ln -sf console/.bashrc ~/.bashrc` | ☐ |
+| 5 | Symlink `.zshrc` | `ln -sf console/shell/zsh/.zshrc ~/.zshrc` | ☐ |
+| 6 | Symlink `.inputrc` | `ln -sf console/shell/.inputrc ~/.inputrc` | ☐ |
+| 7 | Symlink `.bashrc` | `ln -sf console/shell/bash/.bashrc ~/.bashrc` | ☐ |
 | 8 | Powerline fonts | git clone fonts + install.sh | ☐ |
 | 9 | iTerm2 | Импорт `iterm2-full-config/Settings.json` через GUI | ☐ |
 | 10 | uv | `brew install uv`, `uv python install 3.14`, `uv python pin --global 3.14` | ☐ |
@@ -450,7 +427,7 @@ ssh-keygen -t ed25519 -C "devops@example.com"
 | 13 | Vundle | `:BundleInstall` или command-line install | ☐ |
 | 14 | Ansible | `brew install ansible`, symlink config, create `~/.vault_pass` | ☐ |
 | 15 | Golang | `mkdir -p ~/.go` | ☐ |
-| 16 | Git | `ln -sf console/configs/gitconfig ~/.gitconfig` | ☐ |
+| 16 | Git | `ln -sf console/git/gitconfig ~/.gitconfig` | ☐ |
 | 17 | SSH keys | Create/copy keys, add to agent | ☐ |
 
 ---
@@ -475,9 +452,9 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/p
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 
 # 5-6. Symlinks + fonts
-ln -sf $(pwd)/console/.zshrc ~/.zshrc
-ln -sf $(pwd)/console/.inputrc ~/.inputrc
-ln -sf $(pwd)/console/.bashrc ~/.bashrc
+ln -sf $(pwd)/console/shell/zsh/.zshrc ~/.zshrc
+ln -sf $(pwd)/console/shell/.inputrc ~/.inputrc
+ln -sf $(pwd)/console/shell/bash/.bashrc ~/.bashrc
 
 git clone https://github.com/powerline/fonts.git --depth=1
 cd fonts && ./install.sh && cd .. && rm -rf fonts
@@ -493,7 +470,7 @@ ln -sf $(pwd)/console/neovim ~/.config/nvim
 
 # 10-11. Vim + Vundle
 brew install vim
-ln -sf $(pwd)/console/vimrc ~/.vimrc
+ln -sf $(pwd)/console/vim/.vimrc ~/.vimrc
 ln -sf $(pwd)/console/vim ~/.vim
 
 # 12. Ansible
@@ -505,7 +482,7 @@ ln -sf $(pwd)/console/ansible/ansible.cfg ~/.ansible/ansible.cfg
 mkdir -p ~/.go
 
 # 14. Git
-ln -sf $(pwd)/console/configs/gitconfig ~/.gitconfig
+ln -sf $(pwd)/console/git/gitconfig ~/.gitconfig
 
 echo "Done! Restart terminal."
 ```

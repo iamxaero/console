@@ -1,0 +1,178 @@
+# ========================================
+# Git Configuration — DevOps Profile
+# ========================================
+
+[user]
+    name = DevOps
+    email = devops@yourdomain.com
+    signingkey = ~/.ssh/id_ed25519
+
+[core]
+    editor = nvim
+    whitespace = trailing-space,space-before-tab,indent-with-non-tab
+    autocrlf = input
+    safedirectory = %D
+
+[init]
+    defaultBranch = main
+
+[commit]
+    gpgSign = false
+
+[push]
+    default = current
+    followTags = true
+
+[pull]
+    rebase = true
+
+[merge]
+    commit = true
+    summary = true
+    ff = no-ff
+
+[diff]
+    colorMoved = default
+    algorithm = histogram
+
+[alias]
+    # Basics
+    st = status
+    lg = log --graph --oneline --decorate --all
+    lga = log --graph --oneline --decorate --all --pretty=format:"%h %ad %s (%an)" --date=short
+    s = status --short
+    ss = status --short --branch --show-stash
+    co = checkout
+    coo = checkout -B
+    br = branch
+    brd = branch --delete
+    brD = branch --force --delete
+    brv = branch -v
+    brt = branch -a
+    cm = commit --message
+    cam = commit --all --message
+    ca = commit --all
+    cma = commit --amend --no-edit
+    cfa = commit --fixup
+    cs = commit --show-signature
+    # Shortcuts
+    g = status
+    gg = status -sb
+    ga = add
+    gaa = add -A
+    gau = add --update
+    gc = commit
+    gp = pull
+    gpl = pull --rebase --autostash
+    gl = push
+    gf = push --force-with-lease
+    gpf = push --force-with-lease --tags
+    gco = checkout
+    gbd = branch -d
+    gm = merge --no-ff
+    gma = merge --abort
+    gmc = merge --continue
+    gr = rebase
+    gra = rebase --abort
+    grc = rebase --continue
+    grs = rebase --skip
+    gsr = rebase --onto
+    gst = stash
+    gsta = stash apply
+    gstp = stash pop
+    gstd = stash drop
+    gstl = stash list
+    gsts = stash save
+    gstu = stash push -u
+    # Search
+    grep = log -G
+    # Log
+    lol = log --graph --decorate --pretty=oneline --abbrev-commit
+    lll = log --pretty=format:"%h %ad %s %d" --date=short --all
+    lllc = log --pretty=format:"%h %ad %s" --date=short -p
+    # Diffs
+    d = diff
+    dc = diff --cached
+    da = diff --staged
+    dw = diff --word-diff
+    # Remote
+    rem = remote -v
+    rema = remote add
+    remr = remote remove
+    remv = remote rename
+    # Revert
+    rv = revert
+    rvc = revert --continue
+    rva = revert --abort
+    # Tags
+    tags = tag -n1 --sort=-version:refname
+    taga = tag -a
+    # Clean
+    unstage = reset HEAD --
+    unmodify = checkout --
+    # Worktree
+    w = worktree
+    wa = worktree add
+    wl = worktree list
+    wr = worktree remove
+    # DevOps specific
+    env = !git config --list | grep -i "$(echo $1 | tr '[:upper:]' '[:lower:]')"
+    envs = !git config --list | grep -E '(email|name|user|signing)'
+    sign = commit -S --message
+    gpgsign = commit -S
+
+[help]
+    autocorrect = 1
+
+[color]
+    diff = auto
+    status = auto
+    branch = auto
+    interactive = auto
+    pager = true
+
+[branch]
+    autoSetupRebase = always
+    autosetupmerge = true
+
+[fetch]
+    prune = true
+    pruneTags = true
+    all = true
+
+[url "ssh://git@"]
+    insteadOf = "https://git"
+
+[url "ssh://git@"]
+    insteadOf = "git@"
+
+[gpg]
+    program = gpg
+
+[credential]
+    helper = cache --timeout=3600
+    # macOS:
+    # helper = osxkeychain
+
+[http]
+    postBuffer = 524288000
+    lowSpeedLimit = 0
+    lowSpeedTime = 999999
+
+[sendpack]
+    allowForce = true
+
+[rebase]
+    autoSquash = true
+    autoStash = true
+
+# ========================================
+# GPG Signing (optional)
+# ========================================
+# [commit]
+#     gpgsign = true
+#
+# Для создания GPG ключа:
+#   gpg --full-generate-key
+#   gpg --list-secret-keys --keyid-format LONG
+#   git config --global user.signingkey <key-id>
