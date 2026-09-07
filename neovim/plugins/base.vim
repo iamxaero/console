@@ -1,7 +1,9 @@
 " Base vim plugins
+" DEPRECATED — замени на telescope.nvim / nvim-tree
 call dein#add("Shougo/unite.vim")
 call dein#add("Shougo/vimfiler.vim")
 call dein#add("Shougo/vimshell.vim")
+" DEPRECATED — замени на telescope.nvim + treesitter
 call dein#add("Shougo/deoplete.nvim")
 call dein#add("Shougo/vimproc.vim", {
 \ 'build' : {

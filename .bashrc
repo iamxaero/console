@@ -1,41 +1,49 @@
-# Powerline
-## for install: python -m pip install powerline-shell
-function _update_ps1() {
-    PS1=$(powerline-shell $?)
-}
+# ------------------------------------
+# PATH
+# ------------------------------------
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/local/sbin:/opt/local/bin:/opt/local/sbin:$HOME/bin:$PATH"
 
-if [[ $TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1 ]]; then
-    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
-fi
+# ------------------------------------
+# Locale
+# ------------------------------------
+export LC_ALL=en_US.UTF-8
 
-# Set PATH
-export PYENV_ROOT="$HOME/.pyenv"
-export PIPENV_PYTHON="$PYENV_ROOT/shims/python"
-export PATH="/usr/local/bin:/usr/local/sbin:/opt/local/bin/:/opt/local/sbin/:$HOME/bin:$PATH"
-
+# ------------------------------------
 # Ansible
+# ------------------------------------
 export ANSIBLE_VAULT_PASSWORD_FILE=~/.vault_pass
 export ANSIBLE_LOG_PATH=~/.ansible/ansible.log
-export ANSIBLE_STDOUT_CALLBACK="yaml"
+export ANSIBLE_STDOUT_CALLBACK='yaml'
 export ANSIBLE_STRATEGY_PLUGINS=~/.ansible/plugins/mitogen
 export ANSIBLE_CONFIG=~/.ansible/ansible.cfg
 
+# ------------------------------------
 # Golang
+# ------------------------------------
 export GOPATH="$HOME/.go"
 
-# Set Python envirompments
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-  eval "$(pyenv virtualenv-init -)"
+# ------------------------------------
+# Python — uv (pyenv мёртв)
+# ------------------------------------
+alias python="uv run python"
+alias python3="uv run python"
+alias pip="uv run python -m pip"
+alias pip3="uv run python -m pip"
+
+# ------------------------------------
+# SSH
+# ------------------------------------
+eval "$(ssh-agent)" >/dev/null
+if [[ -f "$HOME/.ssh/id_ed25519" ]]; then
+  ssh-add ~/.ssh/id_ed25519
+elif [[ -f "$HOME/.ssh/id_rsa" ]]; then
+  ssh-add ~/.ssh/id_rsa
 fi
 
-# SSH
-eval "$(ssh-agent)"
-ssh-add ~/.ssh/devops_rsa
-
-# ----------------------
+# ------------------------------------
 # Git Aliases
-# ----------------------
+# ------------------------------------
 alias ga="git add"
 alias gaa="git add ."
 alias gaaa="git add --all"

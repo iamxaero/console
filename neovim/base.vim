@@ -1,11 +1,10 @@
-let g:python_host_prog = '~/.pyenv/versions/neovim2/bin/python'
-let g:python3_host_prog = '~/.pyenv/versions/neovim3/bin/python'
-
-" Use Vim settings, rather then Vi settings (much better!).
-" This must be first, because it changes other options as a side effect.
-set nocompatible
+" ========================================
+" Shared base config — sources from vimrc & init.vim
+" ========================================
 
 " ================ General Config ====================
+
+set nocompatible
 
 set number                      "Line numbers are good
 set backspace=indent,eol,start  "Allow backspace in insert mode
@@ -16,27 +15,16 @@ set gcr=a:blinkon0              "Disable cursor blink
 set visualbell                  "No sounds
 set autoread                    "Reload files changed outside vim
 set encoding=utf-8              "Nice symbols in all systems
-set mouse
 
 " This makes vim act like all other editors, buffers can
 " exist in the background without being in a window.
-" http://items.sjbach.com/319/configuring-vim-right
 set hidden
 
 "turn on syntax highlighting
 syntax on
 
 " Change leader to a comma because the backslash is too far away
-" That means all \x commands turn into ,x
-" The mapleader has to be set before vundle starts loading all
-" the plugins.
 let mapleader=","
-
-" ============== Plugin Initialization ==============
-" This loads all the plugins specified in ~/.config/nvim/plugins.vim
-if filereadable(expand("~/.config/nvim/plugins.vim"))
-  source ~/.config/nvim/plugins.vim
-endif
 
 " ================ Indentation ======================
 
@@ -82,7 +70,6 @@ set wildignore+=log/**
 set wildignore+=tmp/**
 set wildignore+=*.png,*.jpg,*.gif
 
-"
 " ================ Scrolling ========================
 
 set scrolloff=8         "Start scrolling when we're 8 lines away from margins
@@ -95,6 +82,3 @@ set incsearch       " Find the next match as we type the search
 set hlsearch        " Highlight searches by default
 set ignorecase      " Ignore case when searching...
 set smartcase       " ...unless we type a capital
-
-" ================ Custom Settings ========================
-source ~/.config/nvim/settings.vim

@@ -1,5 +1,6 @@
 " Language plugins
-call dein#add("scrooloose/syntastic.git")
+" jedi-vim — автодополнение Python (вместо старого syntastic)
+call dein#add("davidhalter/jedi-vim.git")
 
 call dein#add("sheerun/vim-polyglot")
 call dein#add("jtratner/vim-flavored-markdown.git")

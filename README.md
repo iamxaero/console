@@ -1,79 +1,511 @@
-# Install config for bash and zsh
-```
-cd console
-ln -s .inputrc ~/.inputrc
-ln -s .zshrc ~/.zshrc
-ln -s .bashrc ~/.bashrc
-```
-# Install Powerline fonts
+# Console — Personal DevOps Environment Setup
 
-Clone powerline fonts repo:
+> Полный гайд по настройке окружения DevOps-инженера. Все шаги задокументированы для автоматизации.
 
-```git clone https://github.com/powerline/fonts.git --depth=1```
+---
 
-## Install them:
+## Содержание
+
+1. [Предварительные требования](#1-предварительные-требования)
+2. [Homebrew](#2-homebrew)
+3. [Shell (zsh + Oh-My-Zsh)](#3-shell-zsh--oh-my-zsh)
+4. [Shell plugins](#4-shell-plugins)
+5. [Symlink конфигов](#5-symlink-конфигов)
+6. [Powerline fonts](#6-powerline-fonts)
+7. [iTerm2](#7-iterm2)
+8. [Python (uv)](#8-python-uv)
+9. [Neovim](#9-neovim)
+10. [Classic Vim (legacy)](#10-classic-vim-legacy)
+11. [Ansible](#11-ansible)
+12. [Golang](#12-golang)
+13. [SSH](#13-ssh)
+14. [Git](#14-git)
+15. [Summary — чеклист](#summary---чеклист)
+
+---
+
+## 1. Предварительные требования
+
+- macOS (судя по путям `/opt/homebrew`, нужен Apple Silicon / M-series)
+- Xcode Command Line Tools
+
+```bash
+xcode-select --install
 ```
+
+## 2. Homebrew
+
+Установка Homebrew (если ещё не установлен):
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+Обновление:
+
+```bash
+brew update
+```
+
+## 3. Shell (zsh + Oh-My-Zsh)
+
+### Установка zsh
+
+```bash
+brew install zsh
+# Добавить в список логин-шеллов
+sudo sh -c 'echo $(which zsh) >> /etc/shells'
+chsh -s $(which zsh)
+```
+
+### Установка Oh-My-Zsh
+
+```bash
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+```
+
+### Конфигурация
+
+Скопировать `console/.zshrc` в `~/.zshrc`:
+
+```bash
+ln -s $(pwd)/console/.zshrc ~/.zshrc
+```
+
+#### Ключевые настройки в `.zshrc`:
+
+| Параметр | Значение |
+|---|---|
+| Theme | `agnoster` |
+| ZSH_DISABLE_COMPFIX | `true` |
+| Plugins | aws, golang, git, gitfast, macos, command-not-found, zsh-autosuggestions, zsh-syntax-highlighting, zsh-colorize, history-substring-search, helm, iterm2, kubectl, jsontools, ansible, github, sudo, terraform, thefuck, docker, docker-compose, zsh-interactive-cd, zsh-navigation-tools, uv |
+| PATH | `$HOME/.local/bin`, `/usr/local/bin`, `/usr/local/sbin`, `/opt/homebrew/bin`, `/opt/local/bin`, `/opt/local/sbin`, `$HOME/bin` |
+| Locale | `en_US.UTF-8` |
+
+#### Python / uv aliases:
+
+```bash
+alias python="uv run python"
+alias python3="uv run python"
+alias pip="uv run python -m pip"
+alias pip3="uv run python -m pip"
+```
+
+> **Примечание:** pyenv закомментирован — используется uv вместо pyenv.
+
+#### SSH setup:
+
+```bash
+eval "$(ssh-agent)" >/dev/null
+if [[ -f "$HOME/.ssh/id_ed25519" ]]; then
+  ssh-add ~/.ssh/id_ed25519
+elif [[ -f "$HOME/.ssh/id_rsa" ]]; then
+  ssh-add ~/.ssh/id_rsa
+fi
+```
+
+## 4. Shell plugins
+
+```bash
+# zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+
+# zsh-syntax-highlighting
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+```
+
+## 5. Symlink конфигов
+
+```bash
+# Readline config (bash, python REPL и др.)
+ln -sf $(pwd)/console/.inputrc ~/.inputrc
+
+# Bash (если используется)
+ln -sf $(pwd)/console/.bashrc ~/.bashrc
+```
+
+### `.inputrc`
+
+```
+"E[A": history-search-backward
+"E[B": history-search-forward
+```
+
+> Ищет из истории при нажатии ↑/↓ — очень удобно для команд с префиксом.
+
+## 6. Powerline fonts
+
+```bash
+git clone https://github.com/powerline/fonts.git --depth=1
 cd fonts
 ./install.sh
+cd ..
+rm -rf fonts
 ```
 
-# Python enviropment
-```
-# Install pyenv and virtualenv
-brew install pyenv-virtualenv
+> Эти fonts нужны для корректного отображения иконок в теме `agnoster` (powerlevel9k/agnoster использует special glyphs).
 
-# List python versions
-pyenv install -l
+## 7. iTerm2
 
-# Install
-pyenv install 2.7.18
+### Полный конфиг
 
-# Create virtenv:
-pyenv virtualenv 3.7.4 prj
+Файл: `console/iterm/iterm2-full-config/Settings.json`
 
-# Set py to current dir:
-pyenv local prj
+Полный экспорт из `~/Library/Preferences/com.googlecode.iterm2.plist`. Содержит все профили, глобальные настройки, AI-конфигурацию, переменные.
 
-# Set default python:
-pyenv global prj
+#### Установка
 
-# Show python versions
-pyenv versions
-
-# Show virtenv:
-pyenv virtualenvs
-
-# Delete virtenv:
-pyenv virtualenv-delete prj
+1. Скопируй файл на новую машину:
+```bash
+cp console/iterm/iterm2-full-config/Settings.json /tmp/iterm2-new.json
 ```
 
-# python uv
+2. В iTerm2:
+   - iTerm2 → Settings → General
+   - Перетащи `iterm2-new.json` в окно настроек
+   - Или: **Import...** → выбери файл
+
+3. Перезапусти iTerm2: `killall iTerm2`
+
+#### 2 профиля в конфиге
+
+| Профиль | Шрифт | Колонки/Строки | Guid |
+|---|---|---|---|
+| **Default** (базовый) | Monaco 12 | 80/25 | `F2610AC3-706C-4C2A-BB20-F284D51E4296` |
+| **best theme** (рабочий) | InconsolataForPowerline-dz 12 | 176/40 | `132AB47A-ACD5-4BFD-9100-A0AA285E3AEF` |
+
+**best theme** — твой основной профиль с кастомной тёмной палитрой, keyboard map и статус-баром.
+
+#### Обновление конфига после изменений
+
+Когда вносишь изменения в iTerm2 — экспортируй обратно:
+
+```bash
+defaults read /Users/vk/Library/Preferences/com.googlecode.iterm2 \
+  > console/iterm/iterm2-full-config/Settings.json
 ```
-# install uv
+
+#### Старый файл (устарел)
+
+`console/iterm/best theme.json` — старый дамп одного профиля. Теперь не нужен, полный конфиг в `iterm2-full-config/Settings.json`.
+
+#### Подробная документация
+
+Полный разбор конфига (цвета, keyboard map, переменные, AI-настройки): [console/iterm/iterm2-full-config/README.md](iterm/iterm2-full-config/README.md)
+
+## 8. Python (uv)
+
+uv — быстрый менеджер Python-версий и виртуальных окружений (альтернатива pyenv).
+
+```bash
+# Установка
 brew install uv
 
-# versions
+# Проверить доступные версии
 uv python list
 
-# Install
+# Установить нужную версию
 uv python install 3.14
 
-# Set default python
+# Установить как глобальную по умолчанию
 uv python pin --global 3.14
 ```
 
-# Install Neovim
-```
-ln -s .config/nvim ~/.config/nvim
-pyenv virtualenv 3.11.4 neovim3
-pyenv activate neovim3
-pip install pynvim && pip install neovim
+> **pyenv** в `.bashrc` закомментирован. Если нужно — раскомментировать секцию `Remove pyenv (UV лучше)`.
+
+## 9. Neovim
+
+### Установка
+
+```bash
 brew install neovim
 ```
 
-# Iterm2 json config
-import from console/iterm/best theme.json
+### Symlink конфига
 
-# add plugins for zsh
+```bash
+ln -sf $(pwd)/console/neovim ~/.config/nvim
+```
+
+### Архитектура Neovim конфига
+
+```
+~/.config/nvim/
+├── init.vim          # Главный конфиг, загружает plugins.vim и settings.vim
+├── plugins.vim       # dein.vim plugin manager: загружает dein и все plugin/*.vim
+├── settings.vim      # Динамически загружает все settings/*.vim
+├── dein/             # dein.vim (plugin manager, клонируется автоматически)
+├── thex/             # Локальный плагин (autoload)
+├── plugins/          # Определяют все зависимости через dein#add()
+│   ├── base.vim      # unite, vimfiler, vimshell, deoplete, vimproc, tpope/*, session, etc.
+│   ├── languages.vim # syntastic, polyglot, markdown, javascript, rust, go, hcl, etc.
+│   ├── git.vim       # gitv, gist, fugitive, git, gitgutter
+│   ├── appearance.vim# colorizer, solarized, lightline
+│   ├── search.vim    # sneak, ag, easymotion, greplace, etc.
+│   ├── textobjects.vim# kana/*, textobj-* family, indent-guides
+│   └── vim-improvements.vim # splitjoin, delimitMate, multiple-cursors, etc.
+├── settings/         # Конфиги плагинов
+│   ├── appearance.vim
+│   ├── binary-hex.vim
+│   ├── deoplete.vim
+│   ├── lang-javascript.vim
+│   ├── lightline.vim
+│   ├── unite.vim
+│   ├── vim-fold.vim
+│   ├── vim-ident-guides.vim
+│   ├── vim-session.vim
+│   ├── vim-whitespace.vim
+│   └── vimfiller.vim
+└── pack/
+    └── kite/         #kite autocomplete (опционально)
+```
+
+### Ключевые плагины Neovim (dein.vim):
+
+| Категория | Плагины |
+|---|---|
+| **Plugin Manager** | dein.vim |
+| **UI** | lightline.vim, vim-colors-solarized, colorizer |
+| **Navigation** | unite.vim, vimfiler.vim, vimshell.vim, xolox/vim-session |
+| **Auto-completion** | deoplete.nvim, vimproc.vim |
+| **Git** | vim-fugitive, vim-git, vim-gitgutter, gitv, gist-vim |
+| **Languages** | vim-polyglot, vim-go, rust.vim, syntastic, vim-flavored-markdown, vim-javascript, Vim-Jinja2-Syntax, vim-hclfmt, logstash.vim, syslog-ng |
+| **Search** | vim-sneak, ag.vim, vim-easymotion, greplace.vim |
+| **Text Objects** | kana/vim-textobj-*, nathanaelkane/vim-indent-guides |
+| **Editing** | splitjoin.vim, delimitMate, tcomment_vim, multiple-cursors, yankring, change-inside-surroundings, tabular |
+| **Misc** | vim-surround, vim-repeat, vim-abolish, vim-endwise, matchit, NrrwRgn, investigate.vim, gundo.vim |
+
+### Установка плагинов
+
+```bash
+# Открыть Neovim
+nvim
+
+# Затем внутри vim выполнить:
+# :call dein#install()
+```
+
+> dein.vim сам клонирует все зависимости из `plugins/*.vim` при первом запуске.
+
+## 10. Classic Vim (legacy)
+
+### Установка Vim
+
+```bash
+brew install vim
+```
+
+### Symlink
+
+```bash
+# Основной конфиг
+ln -sf $(pwd)/console/vimrc ~/.vimrc
+
+# Bundle-директория (Vundle)
+ln -sf $(pwd)/console/vim ~/.vim
+```
+
+### Vundle плагины (`~/.vim/vundles.vim`)
+
+| Файл | Категория |
+|---|---|
+| ruby.vundle | Ruby плагины |
+| languages.vundle | Языковые пакеты |
+| git.vundle | Git инструменты |
+| appearance.vundle | Цвета и UI |
+| textobjects.vundle | Text objects |
+| search.vundle | Поиск |
+| project.vundle | Проекты |
+| vim-improvements.vundle | Улучшения Vim |
+
+### Установка плагинов Vundle
+
+```bash
+vim --noplugin -u ~/.vim/vundles.vim -N "+set hidden" "+syntax on" +BundleClean! +BundleInstall +qall
+```
+
+## 11. Ansible
+
+### Установка
+
+```bash
+brew install ansible
+```
+
+### Конфигурация
+
+```bash
+# Ansible config
+mkdir -p ~/.ansible
+ln -sf $(pwd)/console/ansible/ansible.cfg ~/.ansible/ansible.cfg
+
+# Vault password (Создать вручную!)
+echo "your_vault_password" > ~/.vault_pass
+chmod 600 ~/.vault_pass
+```
+
+### Ключевые настройки `ansible.cfg`:
+
+| Параметр | Значение |
+|---|---|
+| `nocows` | 1 |
+| `gathering` | smart |
+| `fact_caching_timeout` | 7200 |
+| `retry_files_enabled` | False |
+| `forks` | 20 |
+| `timeout` | 60 |
+| `transport` | ssh |
+| `pipelining` | True |
+| `vault_password_file` | `~/.vault_pass` |
+| `inventory` | `inventory` (относительно ~/.ansible) |
+| `library` | `library/modules` |
+| `roles_path` | `roles/vendor` |
+| `ssh_args` | `-C -o ControlMaster=auto -o ControlPersist=60s -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no` |
+
+### Environment variables (из .zshrc):
+
+```bash
+export ANSIBLE_VAULT_PASSWORD_FILE=~/.vault_pass
+export ANSIBLE_LOG_PATH=~/.ansible/ansible.log
+export ANSIBLE_STDOUT_CALLBACK='yaml'
+export ANSIBLE_STRATEGY_PLUGINS=~/.ansible/plugins/mitogen
+export ANSIBLE_CONFIG=~/.ansible/ansible.cfg
+```
+
+> **Важно:** Mitogen strategy plugins нужны — но путь `~/.ansible/plugins/mitogen` должен указывать на установленный mitogen.
+
+## 12. Golang
+
+```bash
+# Создать GOPATH
+mkdir -p ~/.go
+```
+
+> GOPATH установлен в `~/.go` (конфигурация в `.zshrc`).
+
+## 14. Git
+
+### Установка конфига
+
+```bash
+# Symlink gitconfig
+ln -sf $(pwd)/console/configs/gitconfig ~/.gitconfig
+```
+
+### Ключевые настройки `.gitconfig`:
+
+| Параметр | Значение |
+|---|---|
+| `core.editor` | `nvim` |
+| `pull.rebase` | `true` |
+| `push.default` | `current` |
+| `push.followTags` | `true` |
+| `merge.ff` | `no-ff` |
+| `user.signingkey` | `~/.ssh/id_ed25519` |
+| `credential.helper` | `cache --timeout=3600` |
+
+### Aliases
+
+~60 алиасов: `st`, `lg`, `gco`, `gcob`, `gs`, `gp`, `gpr`, `gr`, `gst`, `gaa`, `gm`, `gpf`, `w` (worktree), и др.
+
+> **Примечание:** `.gitconfig` — полный конфиг DevOps-инженера. Email/name/ключи нужно адаптировать под себя.
+
+## 15. SSH
+
+### Ключи
+
+В `.zshrc` настроена попытка добавить ключи:
+
+1. `~/.ssh/id_ed25519` (приоритет)
+2. `~/.ssh/id_rsa` (fallback)
+3. `~/.ssh/devops_rsa` (из старого `.bashrc`)
+
+**Что нужно сделать вручную:**
+
+```bash
+# Скопировать/создать SSH ключи
+# 1. Либо создать новый:
+ssh-keygen -t ed25519 -C "devops@example.com"
+
+# 2. Либо скопировать существующие из бэкапа
+# Добавить публичный ключ в GitHub, GitLab и т.д.
+```
+
+## Summary — чеклист
+
+| # | Шаг | Команда | Статус |
+|---|---|---|---|
+| 1 | Xcode CLT | `xcode-select --install` | ☐ |
+| 2 | Homebrew | `brew install` | ☐ |
+| 3 | zsh + Oh-My-Zsh | `brew install zsh`, install script | ☐ |
+| 4 | Shell plugins | git clone autosuggestions, syntax-highlighting | ☐ |
+| 5 | Symlink `.zshrc` | `ln -sf console/.zshrc ~/.zshrc` | ☐ |
+| 6 | Symlink `.inputrc` | `ln -sf console/.inputrc ~/.inputrc` | ☐ |
+| 7 | Symlink `.bashrc` | `ln -sf console/.bashrc ~/.bashrc` | ☐ |
+| 8 | Powerline fonts | git clone fonts + install.sh | ☐ |
+| 9 | iTerm2 | Импорт `iterm2-full-config/Settings.json` через GUI | ☐ |
+| 10 | uv | `brew install uv`, `uv python install 3.14`, `uv python pin --global 3.14` | ☐ |
+| 11 | Neovim | `brew install neovim`, symlink, `:call dein#install()` | ☐ |
+| 12 | Vim | `brew install vim`, symlink `vimrc` + `vim/` | ☐ |
+| 13 | Vundle | `:BundleInstall` или command-line install | ☐ |
+| 14 | Ansible | `brew install ansible`, symlink config, create `~/.vault_pass` | ☐ |
+| 15 | Golang | `mkdir -p ~/.go` | ☐ |
+| 16 | Git | `ln -sf console/configs/gitconfig ~/.gitconfig` | ☐ |
+| 17 | SSH keys | Create/copy keys, add to agent | ☐ |
+
+---
+
+## Quick Setup Script
+
+Для быстрой повторной настройки можно собрать всё в один скрипт:
+
+```bash
+#!/bin/bash
+set -e
+
+# 1-2. Xcode + Homebrew
+xcode-select --install
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew update
+
+# 3-4. zsh + Oh-My-Zsh + plugins
+brew install zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+
+# 5-6. Symlinks + fonts
+ln -sf $(pwd)/console/.zshrc ~/.zshrc
+ln -sf $(pwd)/console/.inputrc ~/.inputrc
+ln -sf $(pwd)/console/.bashrc ~/.bashrc
+
+git clone https://github.com/powerline/fonts.git --depth=1
+cd fonts && ./install.sh && cd .. && rm -rf fonts
+
+# 8. uv
+brew install uv
+uv python install 3.14
+uv python pin --global 3.14
+
+# 9. Neovim
+brew install neovim
+ln -sf $(pwd)/console/neovim ~/.config/nvim
+
+# 10-11. Vim + Vundle
+brew install vim
+ln -sf $(pwd)/console/vimrc ~/.vimrc
+ln -sf $(pwd)/console/vim ~/.vim
+
+# 12. Ansible
+brew install ansible
+mkdir -p ~/.ansible
+ln -sf $(pwd)/console/ansible/ansible.cfg ~/.ansible/ansible.cfg
+
+# 13. Golang
+mkdir -p ~/.go
+
+# 14. Git
+ln -sf $(pwd)/console/configs/gitconfig ~/.gitconfig
+
+echo "Done! Restart terminal."
+```
