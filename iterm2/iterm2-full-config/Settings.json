@@ -1,21 +1,22 @@
 {
     AIFeatureFunctionCalling = 1;
-    AIFeatureHostedCodeInterpeter = 1;
-    AIFeatureHostedFileSearch = 1;
-    AIFeatureHostedWebSearch = 1;
+    AIFeatureHostedCodeInterpeter = 0;
+    AIFeatureHostedFileSearch = 0;
+    AIFeatureHostedWebSearch = 0;
     AIFeatureStreamingResponses = 1;
-    AITermAPI = 2;
+    AITermAPI = 5;
     AIVectorStore = 0;
-    AiMaxTokens = 1050000;
-    AiModel = "gpt-5.5";
-    AiResponseMaxTokens = 128000;
-    AitermURL = "https://api.openai.com/v1/responses";
+    AIVendor = 3;
+    AiMaxTokens = 10000000;
+    AiModel = "llama4:latest";
+    AiResponseMaxTokens = 10000000;
+    AitermURL = "http://localhost:11434/api/chat";
     AppleAntiAliasingThreshold = 1;
     ApplePressAndHoldEnabled = 0;
     AppleScrollAnimationEnabled = 0;
     AppleSmoothFixedFontsSizeThreshold = 1;
     AppleWindowTabbingMode = manual;
-    "Default Bookmark Guid" = "132AB47A-ACD5-4BFD-9100-A0AA285E3AEF";
+    "Default Bookmark Guid" = "E3E4B28B-4060-4BE0-AB89-23024C7331C4";
     HapticFeedbackForEsc = 0;
     HotkeyMigratedFromSingleToMulti = 1;
     NSAutoFillHeuristicControllerEnabled = 0;
@@ -36,7 +37,7 @@
     "NSWindow Frame NSColorPanel" = "0 83 250 297 0 0 1800 1129 ";
     "NSWindow Frame SUStatusFrame" = "700 756 400 139 0 0 1800 1129 ";
     "NSWindow Frame SUUpdateAlert" = "590 559 620 402 0 0 1800 1129 ";
-    "NSWindow Frame iTerm Window 0" = "382 391 1418 738 0 0 1800 1129 ";
+    "NSWindow Frame iTerm Window 0" = "0 391 1418 738 0 0 1800 1129 ";
     "New Bookmarks" =     (
                 {
             "ASCII Anti Aliased" = 1;
@@ -804,10 +805,9 @@
             "Cursor Type" = 2;
             "Custom Command" = No;
             "Custom Directory" = No;
-            "Custom Locale" = "en_US.UTF-8";
+            "Custom Locale" = "en_AU.UTF-8";
             "Default Bookmark" = No;
             Description = Default;
-            "Disable Printing" = 0;
             "Disable Window Resizing" = 1;
             "Flashing Bell" = 0;
             "Foreground Color" =             {
@@ -817,7 +817,7 @@
                 "Green Component" = "0.5803921568627451";
                 "Red Component" = "0.5137254901960784";
             };
-            Guid = "132AB47A-ACD5-4BFD-9100-A0AA285E3AEF";
+            Guid = "E3E4B28B-4060-4BE0-AB89-23024C7331C4";
             "Horizontal Spacing" = "1.01";
             "Idle Code" = 0;
             "Jobs to Ignore" =             (
@@ -974,7 +974,9 @@
             "Status Bar Layout" =             {
                 "advanced configuration" =                 {
                     algorithm = 0;
+                    "auto-rainbow style" = 0;
                     font = ".AppleSystemUIFont 12";
+                    "remove empty components" = 0;
                 };
                 components =                 (
                                         {
@@ -985,9 +987,121 @@
                                 "base: priority" = 5;
                                 maxwidth = "1.797693134862316e+308";
                                 minwidth = 0;
+                                "shared text color" =                                 {
+                                    "Alpha Component" = 1;
+                                    "Blue Component" = "0.6359096169471741";
+                                    "Color Space" = P3;
+                                    "Green Component" = "0.6414334774017334";
+                                    "Red Component" = "0.8600031733512878";
+                                };
                             };
                             "layout advanced configuration dictionary value" =                             {
                                 algorithm = 0;
+                                "auto-rainbow style" = 0;
+                                font = ".AppleSystemUIFont 12";
+                                "remove empty components" = 0;
+                            };
+                        };
+                    },
+                                        {
+                        class = iTermStatusBarSpringComponent;
+                        configuration =                         {
+                            knobs =                             {
+                                iTermStatusBarSpringComponentSizeMultipleKey = 0;
+                            };
+                            "layout advanced configuration dictionary value" =                             {
+                                algorithm = 0;
+                                "auto-rainbow style" = 0;
+                                font = ".AppleSystemUIFont 12";
+                                "remove empty components" = 0;
+                            };
+                        };
+                    },
+                                        {
+                        class = iTermStatusBarCPUUtilizationComponent;
+                        configuration =                         {
+                            knobs =                             {
+                                "base: compression resistance" = 1;
+                                "base: priority" = 5;
+                                "shared text color" =                                 {
+                                    "Alpha Component" = 1;
+                                    "Blue Component" = "0.6979729533195496";
+                                    "Color Space" = P3;
+                                    "Green Component" = "0.8927000164985657";
+                                    "Red Component" = "0.6883133053779602";
+                                };
+                            };
+                            "layout advanced configuration dictionary value" =                             {
+                                algorithm = 0;
+                                "auto-rainbow style" = 0;
+                                font = ".AppleSystemUIFont 12";
+                                "remove empty components" = 0;
+                            };
+                        };
+                    },
+                                        {
+                        class = iTermStatusBarMemoryUtilizationComponent;
+                        configuration =                         {
+                            knobs =                             {
+                                "base: compression resistance" = 1;
+                                "base: priority" = 5;
+                                "shared text color" =                                 {
+                                    "Alpha Component" = 1;
+                                    "Blue Component" = "0.8911065459251404";
+                                    "Color Space" = P3;
+                                    "Green Component" = "0.819938600063324";
+                                    "Red Component" = "0.6702345013618469";
+                                };
+                            };
+                            "layout advanced configuration dictionary value" =                             {
+                                algorithm = 0;
+                                "auto-rainbow style" = 0;
+                                font = ".AppleSystemUIFont 12";
+                                "remove empty components" = 0;
+                            };
+                        };
+                    },
+                                        {
+                        class = iTermStatusBarNetworkUtilizationComponent;
+                        configuration =                         {
+                            knobs =                             {
+                                "base: compression resistance" = 1;
+                                "base: priority" = 5;
+                                "shared text color" =                                 {
+                                    "Alpha Component" = 1;
+                                    "Blue Component" = "0.8813615441322327";
+                                    "Color Space" = P3;
+                                    "Green Component" = "0.6336225271224976";
+                                    "Red Component" = "0.7130210995674133";
+                                };
+                            };
+                            "layout advanced configuration dictionary value" =                             {
+                                algorithm = 0;
+                                "auto-rainbow style" = 0;
+                                font = ".AppleSystemUIFont 12";
+                                "remove empty components" = 0;
+                            };
+                        };
+                    },
+                                        {
+                        class = iTermStatusBarBatteryComponent;
+                        configuration =                         {
+                            knobs =                             {
+                                "base: compression resistance" = 1;
+                                "base: priority" = 5;
+                                "shared text color" =                                 {
+                                    "Alpha Component" = 1;
+                                    "Blue Component" = "0.7688186764717102";
+                                    "Color Space" = P3;
+                                    "Green Component" = "0.6414304971694946";
+                                    "Red Component" = "0.8600050806999207";
+                                };
+                            };
+                            "layout advanced configuration dictionary value" =                             {
+                                algorithm = 0;
+                                "auto-rainbow style" = 0;
+                                font = ".AppleSystemUIFont 12";
+                                "remove empty components" = 0;
                             };
                         };
                     }
@@ -1009,7 +1123,7 @@
             "Vertical Spacing" = 1;
             "Visual Bell" = 1;
             "Window Type" = 0;
-            "Working Directory" = "$HOME";
+            "Working Directory" = "/Users/xaero";
         }
     );
     NoSyncAllAppVersions =     (
@@ -1027,7 +1141,7 @@
     NoSyncInstallationId = "290E5D56-9D68-4CF3-8F02-3ABF52405CDD";
     NoSyncLastOSVersion = "Version 26.6.2 (Build 25G83)";
     NoSyncLastSystemPythonVersionRequirement = "1.17";
-    NoSyncLaunchExperienceControllerRunCount = 39;
+    NoSyncLaunchExperienceControllerRunCount = 45;
     NoSyncNextAnnoyanceTime = "788352784.034845";
     NoSyncPermissionToShowTip = 0;
     NoSyncRecordedVariables =     {
@@ -1575,11 +1689,12 @@
     NoSyncRemoveDeprecatedKeyMappings = 1;
     NoSyncRestoreWindowsCount = 0;
     NoSyncSavedWindowPositions =     {
-        0 = "{382, 1129}";
+        0 = "{0, 1129}";
     };
     NoSyncTipOfTheDayEligibilityBeganTime = "787003612.221813";
     NoSyncUserHasSelectedCommand = 1;
     NoSyncWindowRestoresWorkspaceAtLaunch = 0;
+    OpenBookmark = 0;
     PointerActions =     {
         "Button,1,1,," =         {
             Action = kContextMenuPointerAction;
@@ -1604,12 +1719,14 @@
     SUFeedAlternateAppNameKey = iTerm;
     SUFeedURL = "https://iterm2.com/appcasts/final_modern.xml?shard=55";
     SUHasLaunchedBefore = 1;
-    SULastCheckTime = "2026-09-03 23:11:52 +0000";
+    SULastCheckTime = "2026-09-08 20:10:33 +0000";
     SUSendProfileInfo = 0;
     SUUpdateGroupIdentifier = 1249915738;
     SUUpdateRelaunchingMarker = 0;
     SoundForEsc = 0;
+    TabViewType = 0;
     VisualIndicatorForEsc = 0;
+    WindowPlacement = 3;
     "findMode_iTerm" = 0;
     "iTerm Version" = "3.6.11";
 }
