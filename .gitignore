@@ -2,3 +2,4 @@
 *.retry
 vim/backups
 vim/.netrwhist
+plan.md

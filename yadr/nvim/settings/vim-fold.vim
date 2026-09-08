@@ -1,2 +1,0 @@
-
-set foldnestmax=6

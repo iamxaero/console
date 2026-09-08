@@ -1,10 +1,30 @@
 # Console — DevOps Environment Setup
 
-> Complete guide for setting up a DevOps engineer's environment. All steps are documented for automation.
-
-> **Note:** This project does not contain personal data. When setting up on a new machine, replace placeholders (email, name) with your own values.
+> Полный набор конфигов DevOps-окружения. Каждое приложение — отдельная директория с README и пошаговыми инструкциями по настройке.
+>
+> **Заметка:** В проекте нет персональных данных. При настройке на новой машине замените placeholder'ы (email, name) на свои.
 
 ---
+
+## Applications
+
+| Приложение | Директория | Описание |
+|---|---|---|
+| **Shell** (zsh + bash) | [shell/](shell/) | .zshrc с Oh-My-Zsh (23 плагина), .bashrc, .inputrc |
+| **iTerm2** | [iterm2/](iterm2/) | Полный экспорт конфига, 2 профиля, цветовые палитры |
+| **Neovim** | [neovim/](neovim/) | init.vim, dein.vim, 73 плагина, deoplete, LSP-ready |
+| **Vim** (legacy) | [vim/](vim/) | .vimrc, Vundle, бэквёрд-совместимость |
+| **Ansible** | [ansible/](ansible/) | ansible.cfg, vault, inventory, roles |
+| **Git** | [git/](git/) | .gitconfig, ~60 алиасов, rebase workflow |
+| **YADR** | [yadr/](yadr/) | Legacy dotfiles (Prezto, Vundle, Tmux) |
+
+## Quick Start
+
+```bash
+# Полная настройка (см. разделы ниже)
+# Или настройка конкретного приложения:
+cd console && cat <app>/README.md
+```
 
 ## Table of Contents
 
