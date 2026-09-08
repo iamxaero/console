@@ -1,10 +1,10 @@
 # Bash Configuration
 
-> Базовая конфигурация bash для DevOps-окружения.
+> Basic bash configuration for the DevOps environment.
 
 ---
 
-## Установка
+## Installation
 
 ```bash
 # Symlink
@@ -13,9 +13,9 @@ ln -sf $(pwd)/console/shell/bash/.bashrc ~/.bashrc
 
 ---
 
-## Ключевые настройки
+## Key Settings
 
-- PATH настройки
+- PATH settings
 - Ansible environment variables
 - Python aliases (uv)
 - SSH setup
@@ -23,30 +23,30 @@ ln -sf $(pwd)/console/shell/bash/.bashrc ~/.bashrc
 
 ---
 
-## Зависимости
+## Dependencies
 
-| Зависимость | Зачем |
+| Dependency | Purpose |
 |---|---|
-| powerline-shell | Powerline prompt для bash (опционально) |
-| uv | Управление Python версиями |
+| powerline-shell | Powerline prompt for bash (optional) |
+| uv | Python version management |
 
 ---
 
 ## Troubleshooting
 
-### Aliases не работают
+### Aliases not working
 
 ```bash
-# Убедись что .bashrc линкнут
+# Make sure .bashrc is symlinked
 ls -la ~/.bashrc
 
-# Если нет — пересоздай линк
+# If not — recreate the symlink
 ln -sf $(pwd)/console/shell/bash/.bashrc ~/.bashrc
 ```
 
-### SSH не добавляет ключи
+### SSH not adding keys
 
 ```bash
-# Проверь что ключи существуют
+# Check that keys exist
 ls -la ~/.ssh/id_ed25519 ~/.ssh/id_rsa 2>/dev/null
 ```

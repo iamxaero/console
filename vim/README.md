@@ -1,105 +1,105 @@
 # Vim (Legacy) Configuration
 
-> Классический Vim конфиг с Vundle plugin manager. Legacy — используется для совместимости со старыми скриптами.
+> Classic Vim config with Vundle plugin manager. Legacy — used for compatibility with old scripts.
 
 ---
 
-## Установка
+## Installation
 
 ```bash
-# Установи Vim
+# Install Vim
 brew install vim
 
-# Symlink основного конфига
+# Symlink main config
 ln -sf $(pwd)/console/vim/.vimrc ~/.vimrc
 
-# Symlink директории vim
+# Symlink vim directory
 ln -sf $(pwd)/console/vim ~/.vim
 ```
 
 ---
 
-## Структура
+## Structure
 
 ```
 vim/
-├── .vimrc              # Главный конфиг (sources vundles.vim + base.vim)
-├── vundles.vim         # Vundle plugin definitions (разбит по категориям)
-├── base.vim            # Общие настройки для vim и neovim
-├── ruby.vundle         # Ruby плагины
-├── languages.vundle    # Языковые пакеты
-├── git.vundle          # Git инструменты
-├── appearance.vundle   # Цвета и UI
+├── .vimrc              # Main config (sources vundles.vim + base.vim)
+├── vundles.vim         # Vundle plugin definitions (broken down by category)
+├── base.vim            # Common settings for vim and neovim
+├── ruby.vundle         # Ruby plugins
+├── languages.vundle    # Language packs
+├── git.vundle          # Git tools
+├── appearance.vundle   # Colors and UI
 ├── textobjects.vundle  # Text objects
-├── search.vundle       # Поиск
-├── project.vundle      # Проекты
-└── vim-improvements.vundle # Улучшения Vim
+├── search.vundle       # Search
+├── project.vundle      # Projects
+└── vim-improvements.vundle # Vim improvements
 ```
 
 ---
 
-## Vundle Плагины
+## Vundle Plugins
 
-### Установка плагинов
+### Installing Plugins
 
 ```bash
 vim --noplugin -u ~/.vim/vundles.vim -N "+set hidden" "+syntax on" +BundleClean! +BundleInstall +qall
 ```
 
-### Категории
+### Categories
 
-| Файл | Категория |
+| File | Category |
 |---|---|
-| ruby.vundle | Ruby плагины |
-| languages.vundle | Языковые пакеты |
-| git.vundle | Git инструменты |
-| appearance.vundle | Цвета и UI |
+| ruby.vundle | Ruby plugins |
+| languages.vundle | Language packs |
+| git.vundle | Git tools |
+| appearance.vundle | Colors and UI |
 | textobjects.vundle | Text objects |
-| search.vundle | Поиск |
-| project.vundle | Проекты |
-| vim-improvements.vundle | Улучшения Vim |
+| search.vundle | Search |
+| project.vundle | Projects |
+| vim-improvements.vundle | Vim improvements |
 
 ---
 
-## Управление плагинами
+## Plugin Management
 
-### Обновить плагины
+### Update Plugins
 
 ```bash
 vim --noplugin -u ~/.vim/vundles.vim -N "+set hidden" "+syntax on" +BundleClean! +BundleInstall +qall
 ```
 
-### Добавить новый плагин
+### Add New Plugin
 
-1. Открой нужный файл в `vim/*.vundle`
-2. Добавь строку: `Bundle 'owner/repo'`
-3. Запусти установку (см. выше)
+1. Open the relevant file in `vim/*.vundle`
+2. Add line: `Bundle 'owner/repo'`
+3. Run installation (see above)
 
 ---
 
 ## Troubleshooting
 
-### Vundle не загружается
+### Vundle not loading
 
 ```bash
-# Убедись что .vimrc линкнут
+# Make sure .vimrc is symlinked
 ls -la ~/.vimrc
 
-# Пересоздай Vundle
+# Reinstall Vundle
 rm -rf ~/.vim/bundle
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
-# Установи плагины
+# Install plugins
 vim --noplugin -u ~/.vim/vundles.vim -N "+set hidden" "+syntax on" +BundleClean! +BundleInstall +qall
 ```
 
-### Плагин не устанавливается
+### Plugin not installing
 
 ```bash
-# Проверь интернет-соединение
-# Убедись что git clone работает
+# Check internet connection
+# Make sure git clone works
 git clone https://github.com/owner/repo.git /tmp/test-clone
 
-# Проверь права
+# Check permissions
 ls -la ~/.vim/bundle/
 ```

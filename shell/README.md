@@ -1,15 +1,15 @@
 # Shell Configuration
 
-> Общие настройки для bash и zsh. Включает плагины Oh-My-Zsh, shell plugins и общие переменные окружения.
+> Common settings for bash and zsh. Includes Oh-My-Zsh plugins, shell plugins, and common environment variables.
 
 ---
 
-## Структура
+## Structure
 
 ```
 shell/
-├── README.md              # ← Этот файл
-├── .inputrc               # Readline config (bash, python REPL, и др.)
+├── README.md              # ← This file
+├── .inputrc               # Readline config (bash, python REPL, etc.)
 ├── bash/
 │   ├── README.md          # Bash-specific setup
 │   └── .bashrc
@@ -20,45 +20,45 @@ shell/
 
 ---
 
-## Быстрый старт
+## Quick Start
 
 ```bash
-# Symlink конфигов
+# Symlink configs
 ln -sf $(pwd)/console/shell/zsh/.zshrc ~/.zshrc
 ln -sf $(pwd)/console/shell/bash/.bashrc ~/.bashrc
 ln -sf $(pwd)/console/shell/.inputrc ~/.inputrc
 
-# Установи зависимости (см. shell/zsh/README.md)
+# Install dependencies (see shell/zsh/README.md)
 ```
 
 ---
 
-## Зависимости
+## Dependencies
 
-| Зависимость | Зачем |
+| Dependency | Purpose |
 |---|---|
-| Powerline fonts | Иконки в theme agnoster |
-| Oh-My-Zsh | Фреймворк для zsh |
-| zsh-autosuggestions | Подсказки команд |
-| zsh-syntax-highlighting | Подсветка синтаксиса |
-| uv (или pyenv) | Python менеджеры |
-| powerline-shell | Powerline prompt для bash |
+| Powerline fonts | Icons in agnoster theme |
+| Oh-My-Zsh | zsh framework |
+| zsh-autosuggestions | Command suggestions |
+| zsh-syntax-highlighting | Syntax highlighting |
+| uv (or pyenv) | Python managers |
+| powerline-shell | Powerline prompt for bash |
 
 ---
 
 ## Troubleshooting
 
-### Theme agnoster не показывает иконки
+### agnoster theme not showing icons
 
 ```bash
 git clone https://github.com/powerline/fonts.git --depth=1
 cd fonts && ./install.sh && cd .. && rm -rf fonts
 ```
 
-### uv не работает
+### uv not working
 
 ```bash
-# Если нужен старый pyenv:
-# Раскомментируй секцию pyenv в .bashrc
+# If old pyenv is needed:
+# Uncomment the pyenv section in .bashrc
 brew install pyenv-virtualenv
 ```

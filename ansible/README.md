@@ -1,28 +1,28 @@
 # Ansible Configuration
 
-> Ansible конфиг с настройками для управления серверами.
+> Ansible config with settings for server management.
 
 ---
 
-## Установка
+## Installation
 
 ```bash
-# Установи Ansible
+# Install Ansible
 brew install ansible
 
 # Symlink
 ln -sf $(pwd)/console/ansible/ansible.cfg ~/.ansible/ansible.cfg
 
-# Создай vault password (НЕ коммить этот файл!)
+# Create vault password (DO NOT commit this file!)
 openssl rand -base64 32 > ~/.vault_pass
 chmod 600 ~/.vault_pass
 ```
 
 ---
 
-## Ключевые настройки
+## Key Settings
 
-| Параметр | Значение |
+| Parameter | Value |
 |---|---|
 | `nocows` | 1 |
 | `gathering` | smart |
@@ -32,10 +32,10 @@ chmod 600 ~/.vault_pass
 | `transport` | ssh |
 | `pipelining` | True |
 | `vault_password_file` | `~/.vault_pass` |
-| `inventory` | `inventory` (относительно ~/.ansible) |
+| `inventory` | `inventory` (relative to ~/.ansible) |
 | `roles_path` | `roles/vendor` |
 
-### Environment variables
+### Environment Variables
 
 ```bash
 export ANSIBLE_VAULT_PASSWORD_FILE=~/.vault_pass
@@ -47,29 +47,29 @@ export ANSIBLE_CONFIG=~/.ansible/ansible.cfg
 
 ---
 
-## Зависимости
+## Dependencies
 
-| Зависимость | Зачем |
+| Dependency | Purpose |
 |---|---|
-| mitogen | Стратегия плагин для ускорения Ansible |
-| vault_pass | Файл с паролем для ansible-vault |
+| mitogen | Strategy plugin for Ansible acceleration |
+| vault_pass | Password file for ansible-vault |
 
 ---
 
 ## Troubleshooting
 
-### MITOGEN не загружается
+### MITOGEN not loading
 
 ```bash
-# Убедись что mitogen установлен
+# Make sure mitogen is installed
 mkdir -p ~/.ansible/plugins/mitogen
-# Скачай mitogen в этот путь
+# Download mitogen to this path
 ```
 
-### Vault password не найден
+### Vault password not found
 
 ```bash
-# Создай файл
+# Create the file
 openssl rand -base64 32 > ~/.vault_pass
 chmod 600 ~/.vault_pass
 ```

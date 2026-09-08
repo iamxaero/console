@@ -1,10 +1,10 @@
 # Git Configuration
 
-> Полная конфигурация Git для DevOps-инженера с ~60 алиасами.
+> Full Git configuration for DevOps engineer with ~60 aliases.
 
 ---
 
-## Установка
+## Installation
 
 ```bash
 # Symlink
@@ -13,7 +13,7 @@ ln -sf $(pwd)/console/git/gitconfig ~/.gitconfig
 
 ---
 
-## Ключевые настройки
+## Key Settings
 
 - `core.editor`: `nvim`
 - `pull.rebase`: `true`
@@ -25,11 +25,11 @@ ln -sf $(pwd)/console/git/gitconfig ~/.gitconfig
 
 ---
 
-## Алиасы (~60 шт)
+## Aliases (~60 total)
 
-### Основные
+### Main
 
-| Алиас | Команда |
+| Alias | Command |
 |---|---|
 | `st` | `status` |
 | `lg` | `log --graph --oneline --decorate --all` |
@@ -51,7 +51,7 @@ ln -sf $(pwd)/console/git/gitconfig ~/.gitconfig
 
 ### Pull/Push
 
-| Алиас | Команда |
+| Alias | Command |
 |---|---|
 | `gp` | `pull` |
 | `gpl` | `pull --rebase --autostash` |
@@ -61,7 +61,7 @@ ln -sf $(pwd)/console/git/gitconfig ~/.gitconfig
 
 ### Merge/Rebase
 
-| Алиас | Команда |
+| Alias | Command |
 |---|---|
 | `gm` | `merge --no-ff` |
 | `gma` | `merge --abort` |
@@ -74,7 +74,7 @@ ln -sf $(pwd)/console/git/gitconfig ~/.gitconfig
 
 ### Stash
 
-| Алиас | Команда |
+| Alias | Command |
 |---|---|
 | `gst` | `stash` |
 | `gsta` | `stash apply` |
@@ -86,7 +86,7 @@ ln -sf $(pwd)/console/git/gitconfig ~/.gitconfig
 
 ### Search/Diff
 
-| Алиас | Команда |
+| Alias | Command |
 |---|---|
 | `grep` | `log -G` |
 | `d` | `diff` |
@@ -96,7 +96,7 @@ ln -sf $(pwd)/console/git/gitconfig ~/.gitconfig
 
 ### Worktree
 
-| Алиас | Команда |
+| Alias | Command |
 |---|---|
 | `w` | `worktree` |
 | `wa` | `worktree add` |
@@ -105,30 +105,30 @@ ln -sf $(pwd)/console/git/gitconfig ~/.gitconfig
 
 ---
 
-## Зависимости
+## Dependencies
 
-| Зависимость | Зачем |
+| Dependency | Purpose |
 |---|---|
-| SSH ключ | Для signing commits и push/pull |
-| gpg (опционально) | Для signed commits |
+| SSH key | For signing commits and push/pull |
+| gpg (optional) | For signed commits |
 
 ---
 
 ## Troubleshooting
 
-### Алиасы не работают
+### Aliases not working
 
 ```bash
-# Убедись что gitconfig линкнут
+# Make sure gitconfig is symlinked
 ls -la ~/.gitconfig
-# Если нет — пересоздай линк
+# If not — recreate the link
 ln -sf $(pwd)/console/git/gitconfig ~/.gitconfig
 ```
 
-### Rebase не работает
+### Rebase not working
 
 ```bash
-# Проверь настройки
+# Check settings
 git config --get pull.rebase
-# Должно быть: true
+# Should be: true
 ```

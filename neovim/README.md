@@ -1,75 +1,75 @@
 # Neovim Configuration
 
-> Полная конфигурация Neovim для DevOps-инженера. dein.vim plugin manager, deoplete, 73 плагина.
+> Full Neovim configuration for DevOps engineer. dein.vim plugin manager, deoplete, 73 plugins.
 
 ---
 
-## Установка (для агентов)
+## Installation (for agents)
 
-### 1. Установи Neovim
+### 1. Install Neovim
 
 ```bash
 brew install neovim
 ```
 
-### 2. Symlink конфига
+### 2. Symlink config
 
 ```bash
-# Если старый конфиг есть — перемести
+# If old config exists — move it
 mv ~/.config/nvim ~/.config/nvim.bak 2>/dev/null
 
 # Symlink
 ln -s $(pwd)/console/neovim ~/.config/nvim
 ```
 
-### 3. Построй vimproc.vim (критично для deoplete)
+### 3. Build vimproc.vim (critical for deoplete)
 
 ```bash
-# Клонируй vimproc
+# Clone vimproc
 git clone https://github.com/Shougo/vimproc.vim.git ~/.config/nvim/dein/repos/github.com/Shougo/vimproc.vim
 
-# Собери
+# Build
 cd ~/.config/nvim/dein/repos/github.com/Shougo/vimproc.vim && make
 ```
 
-### 4. Установи Python пайплайн для deoplete
+### 4. Install Python pipeline for deoplete
 
 ```bash
-# Установи pynvim (мост между Neovim и Python)
+# Install pynvim (bridge between Neovim and Python)
 uv pip install --system --break-system-packages pynvim
 
-# Или если uv не работает:
+# Or if uv doesn't work:
 # pip3 install --break-system-packages pynvim
 ```
 
-### 5. Установи все плагины
+### 5. Install all plugins
 
 ```bash
-# Headless режим — быстрее
+# Headless mode — faster
 nvim --headless -c ":call dein#install()" -c ":qall"
 
-# ИЛИ через UpdateRemotePlugins (если deoplete не загружается):
+# OR via UpdateRemotePlugins (if deoplete doesn't load):
 nvim --headless -c ":UpdateRemotePlugins" -c ":qall"
 ```
 
 ---
 
-## Структура
+## Structure
 
 ```
 neovim/
-├── init.vim              # Главный конфиг (sources base.vim + plugins.vim + settings.vim)
-├── base.vim              # Общие настройки для vim и neovim (indentation, search, folding, etc.)
-├── plugins.vim           # dein.vim plugin manager: загружает dein и все plugins/*.vim
-├── settings.vim          # Динамически загружает все settings/*.vim
+├── init.vim              # Main config (sources base.vim + plugins.vim + settings.vim)
+├── base.vim              # Common settings for vim and neovim (indentation, search, folding, etc.)
+├── plugins.vim           # dein.vim plugin manager: loads dein and all plugins/*.vim
+├── settings.vim          # Dynamically loads all settings/*.vim
 ├── .gitignore
 │
 ├── dein/                 # dein.vim plugin manager (Git repo)
 │   ├── autoload/
-│   ├── repos/            # Все установленные плагины здесь
+│   ├── repos/            # All installed plugins here
 │   └── ...
 │
-├── plugins/              # Определяют все зависимости через dein#add()
+├── plugins/              # Define all dependencies via dein#add()
 │   ├── base.vim          # unite, vimfiler, vimshell, deoplete, vimproc, tpope/*, session, etc.
 │   ├── languages.vim     # syntastic→jedi-vim, vim-polyglot, markdown, javascript, go, rust, etc.
 │   ├── git.vim           # gitv, gist, fugitive, git, gitgutter
@@ -78,7 +78,7 @@ neovim/
 │   ├── textobjects.vim   # kana/vim-textobj-*, indent-guides
 │   └── vim-improvements.vim # splitjoin, delimitMate, multiple-cursors, yankring, etc.
 │
-├── settings/             # Конфиги плагинов (deoplete, lightline, etc.)
+├── settings/             # Plugin configs (deoplete, lightline, etc.)
 │   ├── appearance.vim
 │   ├── binary-hex.vim
 │   ├── deoplete.vim
@@ -91,15 +91,15 @@ neovim/
 │   ├── vim-whitespace.vim
 │   └── vimfiller.vim
 │
-├── cache/                # Cache dein.vim (генерируется автоматически)
+├── cache/                # dein.vim cache (generated automatically)
 ├── pack/                 # Pack directory (kite autocomplete)
 │   └── kite/
-└── thex/                 # Локальный плагин (autoload)
+└── thex/                 # Local plugin (autoload)
 ```
 
 ---
 
-## Ключевые плагины
+## Key Plugins
 
 ### Plugin Manager
 - **dein.vim** — fast plugin manager, clones deps on install
@@ -191,45 +191,45 @@ neovim/
 
 ---
 
-## DEPRECATED (запланирована замена)
+## DEPRECATED (scheduled for replacement)
 
-| Плагин | Заменить на | Причина |
+| Plugin | Replace with | Reason |
 |---|---|---|
-| unite.vim | telescope.nvim | Устарел, медленный |
-| vimfiler.vim | nvim-tree.lua / neo-tree | Устарел |
-| vimshell.vim | toggleterm.nvim | Устарел |
-| syntastic | ale / jedi-vim | Мёртв, не поддерживается |
-| deoplete.nvim | nvim-cmp / LSP | Heavy, deoplete медленнее LSP |
+| unite.vim | telescope.nvim | Deprecated, slow |
+| vimfiler.vim | nvim-tree.lua / neo-tree | Deprecated |
+| vimshell.vim | toggleterm.nvim | Deprecated |
+| syntastic | ale / jedi-vim | Dead, unmaintained |
+| deoplete.nvim | nvim-cmp / LSP | Heavy, deoplete slower than LSP |
 
 ---
 
-## Управление плагинами
+## Plugin Management
 
-### Установить/обновить все плагины
+### Install/Update All Plugins
 
 ```bash
 nvim --headless -c ":call dein#install()" -c ":qall"
 ```
 
-### Удалить неиспользуемые плагины
+### Remove Unused Plugins
 
 ```bash
 nvim --headless -c ":call dein#clean()" -c ":qall"
 ```
 
-### Добавить новый плагин
+### Add New Plugin
 
-1. Открой нужный файл в `plugins/*.vim`
-2. Добавь строку: `call dein#add("owner/repo.git")`
-3. Запусти: `nvim --headless -c ":call dein#install()" -c ":qall"`
+1. Open the relevant file in `plugins/*.vim`
+2. Add line: `call dein#add("owner/repo.git")`
+3. Run: `nvim --headless -c ":call dein#install()" -c ":qall"`
 
-### Обновить конкретный плагин
+### Update Specific Plugin
 
 ```bash
 nvim --headless -c ":call dein#update('owner/repo')" -c ":qall"
 ```
 
-### Список установленных плагинов
+### List Installed Plugins
 
 ```bash
 nvim --headless -c ":call dein#list()" -c ":qall"
@@ -237,60 +237,60 @@ nvim --headless -c ":call dein#list()" -c ":qall"
 
 ---
 
-## troubleshooting
+## Troubleshooting
 
-### deoplete не загружается
+### deoplete not loading
 
 ```bash
-# 1. Проверь Python 3
+# 1. Check Python 3
 nvim --headless -c "echo has('python3')" -c ":q"
-# Должно быть: 1
+# Should be: 1
 
-# 2. Установи pynvim
+# 2. Install pynvim
 uv pip install --system --break-system-packages pynvim
 
-# 3. Перерегистрируй remote plugins
+# 3. Re-register remote plugins
 nvim --headless -c ":UpdateRemotePlugins" -c ":qall"
 
-# 4. Построй vimproc (если не собран)
+# 4. Build vimproc (if not built)
 cd ~/.config/nvim/dein/repos/github.com/Shougo/vimproc.vim && make
 
-# 5. Перезапусти Neovim
+# 5. Restart Neovim
 nvim
 ```
 
-### vimproc не собирается
+### vimproc not building
 
 ```bash
-# Проверь что clang установлен
+# Check that clang is installed
 xcode-select --install
 
-# Попробуй без Python support
+# Try without Python support
 cd ~/.config/nvim/dein/repos/github.com/Shougo/vimproc.vim
 make NO_PYTHON=1
 ```
 
-### Непонятная ошибка при запуске
+### Unknown error on launch
 
 ```bash
-# Полный сброс и переустановка
+# Full reset and reinstall
 rm -rf ~/.local/share/nvim
 rm -rf ~/.config/nvim/dein/cache
 
-# Перезагрузи конфиг
+# Reload config
 nvim --headless -c ":call dein#rebuild_cache()" -c ":qall"
 ```
 
-### checkhealth не работает
+### checkhealth not working
 
-В Neovim 0.10+ `:checkhealth` может падать с ошибками из-за несовместимости с dein. Если `checkhealth` не работает — просто открывай `nvim` и смотри на ошибки в статуслайне.
+In Neovim 0.10+ `:checkhealth` may fail with errors due to dein incompatibility. If `checkhealth` doesn't work — just open `nvim` and check the statusline for errors.
 
 ---
 
 ## Notes
 
-- **base.vim** содержит общие настройки (indentation, search, folding, completion, scrolling). Он используется и `vimrc`, и `init.vim`.
-- **dein.vim** клонирует все плагины в `~/.config/nvim/dein/repos/` при первом запуске.
-- **vimproc.vim** нужно собирать вручную — dein не строит его автоматически.
-- **pynvim** обязателен для deoplete (автодополнение).
-- Для macOS: `make` для vimproc использует clang из Xcode Command Line Tools.
+- **base.vim** contains common settings (indentation, search, folding, completion, scrolling). It is used by both `vimrc` and `init.vim`.
+- **dein.vim** clones all plugins into `~/.config/nvim/dein/repos/` on first launch.
+- **vimproc.vim** must be built manually — dein does not build it automatically.
+- **pynvim** is required for deoplete (auto-completion).
+- For macOS: `make` for vimproc uses clang from Xcode Command Line Tools.

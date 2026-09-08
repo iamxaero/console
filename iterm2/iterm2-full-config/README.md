@@ -1,57 +1,57 @@
 # iTerm2 Configuration
 
-> Полный экспорт конфига iTerm2 из `~/Library/Preferences/com.googlecode.iterm2.plist`
+> Full export of iTerm2 config from `~/Library/Preferences/com.googlecode.iterm2.plist`
 >
-> Формат: Apple Property List (plist-style), не чистый JSON
+> Format: Apple Property List (plist-style), not plain JSON
 
 ---
 
-## Обновление конфига
+## Updating the Config
 
-Когда меняешь настройки в iTerm2 — экспортируй снова:
+When you change settings in iTerm2, export again:
 
 ```bash
-# Через defaults (командная строка)
+# Via defaults (command line)
 defaults read /Users/vk/Library/Preferences/com.googlecode.iterm2 \
   > console/iterm/iterm2-full-config/Settings.json
 ```
 
-### Через GUI iTerm2
+### Via iTerm2 GUI
 
-1. Открой iTerm2
+1. Open iTerm2
 2. iTerm2 → Settings → General
-3. Перетащи `Settings.json` в окно настроек
-4. Или: **File → Import Settings**
+3. Drag `Settings.json` into the settings window
+4. Or: **File → Import Settings**
 
 ---
 
-## Структура конфига
+## Config Structure
 
-Файл содержит три основные части:
+The file contains three main parts:
 
-1. **Глобальные настройки** — AI, оконные фреймы, системные параметры
-2. **New Bookmarks** — массив профилей (2 шт.)
-3. **NoSync** — системная информация, переменные, метаданные
+1. **Global settings** — AI, window frames, system parameters
+2. **New Bookmarks** — profiles array (2)
+3. **NoSync** — system info, variables, metadata
 
 ---
 
-## Глобальные настройки
+## Global Settings
 
-### Apple-системные
+### Apple System
 
-| Параметр | Значение |
+| Parameter | Value |
 |---|---|
 | `AppleWindowTabbingMode` | manual |
-| `AppleScrollAnimationEnabled` | 0 (отключена) |
+| `AppleScrollAnimationEnabled` | 0 (disabled) |
 | `ApplePressAndHoldEnabled` | 0 |
 | `AppleSmoothFixedFontsSizeThreshold` | 1 |
 | `AppleAntiAliasingThreshold` | 1 |
 | `NSScrollAnimationEnabled` | 0 |
 | `NSScrollViewShouldScrollUnderTitlebar` | 0 |
 
-### Оконные фреймы
+### Window Frames
 
-| Фрейм | Позиция | Размер | Монитор |
+| Frame | Position | Size | Monitor |
 |---|---|---|---|
 | iTerm Main Window | 382, 391 | 1418×738 | -1 (main) |
 | NSColorPanel | 0, 83 | 250×297 | - |
@@ -60,7 +60,7 @@ defaults read /Users/vk/Library/Preferences/com.googlecode.iterm2 \
 
 ### AI (iTerm2 AI)
 
-| Параметр | Значение |
+| Parameter | Value |
 |---|---|
 | `AiModel` | gpt-5.5 |
 | `AiMaxTokens` | 1050000 |
@@ -76,19 +76,19 @@ defaults read /Users/vk/Library/Preferences/com.googlecode.iterm2 \
 
 ---
 
-## Профили (New Bookmarks)
+## Profiles (New Bookmarks)
 
 ### 1. Default
 
-Базовый профиль — для новых вкладок и окон.
+Basic profile — for new tabs and windows.
 
-| Параметр | Значение |
+| Parameter | Value |
 |---|---|
 | **Name** | Default |
 | **Guid** | `F2610AC3-706C-4C2A-BB20-F284D51E4296` |
-| **Шрифт** | Monaco 12 |
+| **Font** | Monaco 12 |
 | **Non-ASCII Font** | Monaco 12 |
-| **Колонки / Строки** | 80 / 25 |
+| **Cols / Rows** | 80 / 25 |
 | **Scrollback** | 1000 |
 | **Terminal Type** | xterm-256color |
 | **Mouse Reporting** | 1 |
@@ -112,20 +112,20 @@ defaults read /Users/vk/Library/Preferences/com.googlecode.iterm2 \
 | **Description** | Default |
 | **Jobs to Ignore** | rlogin, ssh, slogin, telnet |
 | **Custom Locale** | en_US.UTF-8 |
-| **Keyboard Map** | (пусто — стандартные) |
+| **Keyboard Map** | (empty — defaults) |
 
 ### 2. best theme
 
-Основной рабочий профиль — тёмная тема, кастомная палитра, клавиатурные маппинги.
+Main working profile — dark theme, custom palette, keyboard mappings.
 
-| Параметр | Значение |
+| Parameter | Value |
 |---|---|
 | **Name** | best theme |
 | **Guid** | `132AB47A-ACD5-4BFD-9100-A0AA285E3AEF` |
-| **Default Bookmark** | (выбран по умолчанию) |
-| **Шрифт** | InconsolataForPowerline-dz 12 |
+| **Default Bookmark** | (selected by default) |
+| **Font** | InconsolataForPowerline-dz 12 |
 | **Non-ASCII Font** | Menlo-Regular 11 |
-| **Колонки / Строки** | 176 / 40 |
+| **Cols / Rows** | 176 / 40 |
 | **Scrollback** | 1000 |
 | **Working Directory** | `$HOME` |
 | **Terminal Type** | xterm-256color |
@@ -150,34 +150,34 @@ defaults read /Users/vk/Library/Preferences/com.googlecode.iterm2 \
 | **Horizontal Spacing** | 1.01 |
 | **Vertical Spacing** | 1 |
 | **Screen** | -1 |
-| **Shortcut** | (пусто) |
+| **Shortcut** | (empty) |
 
-#### Цветовая палитра (best theme)
+#### Color Palette (best theme)
 
-| Color | Red | Green | Blue | Описание |
+| Color | Red | Green | Blue | Description |
 |---|---|---|---|---|
-| **Background** | 0 | 0.17 | 0.21 | Тёмно-синий |
-| **Foreground** | 0.51 | 0.58 | 0.59 | Серо-голубой |
-| **Ansi 0** | 0.03 | 0.07 | 0.26 | Тёмный |
-| **Ansi 1** | 0.86 | 0.20 | 0.18 | Красный |
-| **Ansi 2** | 0.52 | 0.60 | 0 | Зелёный |
-| **Ansi 3** | 0.71 | 0.54 | 0 | Жёлтый |
-| **Ansi 4** | 0.15 | 0.55 | 0.82 | Синий |
-| **Ansi 5** | 0.83 | 0.21 | 0.51 | Маджента |
-| **Ansi 6** | 0.16 | 0.63 | 0.60 | Бирюзовый |
-| **Ansi 7** | 0.93 | 0.91 | 0.84 | Светло-серый |
-| **Ansi 8** | 0.28 | 0.33 | 0.47 | Серый |
-| **Ansi 9** | 0.80 | 0.29 | 0.09 | Ярко-красный |
-| **Ansi 10** | 0.35 | 0.43 | 0.46 | Серо-зелёный |
-| **Ansi 11** | 0.40 | 0.48 | 0.51 | Серо-жёлтый |
-| **Ansi 12** | 0.51 | 0.58 | 0.59 | Серо-синий |
-| **Ansi 13** | 0.42 | 0.44 | 0.77 | Фиолетовый |
-| **Ansi 14** | 0.58 | 0.63 | 0.63 | Бирюзовый светл. |
-| **Ansi 15** | 0.99 | 0.96 | 0.89 | Белый |
+| **Background** | 0 | 0.17 | 0.21 | Dark blue |
+| **Foreground** | 0.51 | 0.58 | 0.59 | Grey-blue |
+| **Ansi 0** | 0.03 | 0.07 | 0.26 | Dark |
+| **Ansi 1** | 0.86 | 0.20 | 0.18 | Red |
+| **Ansi 2** | 0.52 | 0.60 | 0 | Green |
+| **Ansi 3** | 0.71 | 0.54 | 0 | Yellow |
+| **Ansi 4** | 0.15 | 0.55 | 0.82 | Blue |
+| **Ansi 5** | 0.83 | 0.21 | 0.51 | Magenta |
+| **Ansi 6** | 0.16 | 0.63 | 0.60 | Teal |
+| **Ansi 7** | 0.93 | 0.91 | 0.84 | Light grey |
+| **Ansi 8** | 0.28 | 0.33 | 0.47 | Grey |
+| **Ansi 9** | 0.80 | 0.29 | 0.09 | Bright red |
+| **Ansi 10** | 0.35 | 0.43 | 0.46 | Grey-green |
+| **Ansi 11** | 0.40 | 0.48 | 0.51 | Grey-yellow |
+| **Ansi 12** | 0.51 | 0.58 | 0.59 | Grey-blue |
+| **Ansi 13** | 0.42 | 0.44 | 0.77 | Purple |
+| **Ansi 14** | 0.58 | 0.63 | 0.63 | Light teal |
+| **Ansi 15** | 0.99 | 0.96 | 0.89 | White |
 
-#### Дополнительные цвета (best theme)
+#### Additional Colors (best theme)
 
-| Цвет | Red | Green | Blue |
+| Color | Red | Green | Blue |
 |---|---|---|---|
 | **Cursor Color** | 0.51 | 0.58 | 0.59 |
 | **Cursor Text Color** | 0.03 | 0.07 | 0.26 |
@@ -190,9 +190,9 @@ defaults read /Users/vk/Library/Preferences/com.googlecode.iterm2 \
 
 #### Keyboard Map (best theme)
 
-Пользовательские клавиатурные маппинги:
+Custom keyboard mappings:
 
-| Комбинация | Действие | Выход |
+| Combination | Action | Output |
 |---|---|---|
 | `Esc [A` | Esc Esc Up | `0x1b 0x1b 0x5b 0x41` |
 | `Esc [B` | Esc Esc Down | `0x1b 0x1b 0x5b 0x42` |
@@ -217,14 +217,14 @@ defaults read /Users/vk/Library/Preferences/com.googlecode.iterm2 \
 
 #### Option Key
 
-| Клавиша | Значение |
+| Key | Value |
 |---|---|
 | `Option Key Sends` | 2 |
 | `Right Option Key Sends` | 2 |
 
-Значение `2` означает: отсылать `Meta` (⌥) как Esc.
+Value `2` means: send `Meta` (⌥) as Esc.
 
-#### Статус-бар
+#### Status Bar
 
 ```
 iTermStatusBarJobComponent
@@ -236,79 +236,79 @@ iTermStatusBarJobComponent
 
 ---
 
-## NoSync (системная информация)
+## NoSync (System Info)
 
 ### macOS
 
-| Параметр | Значение |
+| Parameter | Value |
 |---|---|
-| **Версия** | Version 26.6.2 (Build 25G83) |
-| **Экран** | 1800×1169 |
+| **Version** | Version 26.6.2 (Build 25G83) |
+| **Screen** | 1800×1169 |
 | **Window Preferences** | topLeft: 507, 928 |
 | **Last Root Directory** | `/Users/vk/git` (hex-encoded) |
 
 ### iTerm2
 
-| Параметр | Значение |
+| Parameter | Value |
 |---|---|
-| **Версии** | 3.6.6, 3.6.8, 3.6.9, 3.6.10, 3.6.11 |
+| **Versions** | 3.6.6, 3.6.8, 3.6.9, 3.6.10, 3.6.11 |
 | **Installation ID** | 290E5D56-9D68-4CF3-8F02-3ABF52405CDD |
 | **Python Version Requirement** | 1.17 |
 | **Launch Experience Run Count** | 39 |
 | **Ignore System Window Restoration** | 1 |
 | **Permission to Show Tip** | 0 |
 
-### Recorded Variables (32 шт.)
+### Recorded Variables (32 total)
 
 profileName, tmuxRole, lastCommand, hostname, path, shell, selection, processTitle, columns, rows, tmuxWindowPane, tmuxPaneTitle, tmuxStatusLeft, tmuxStatusRight, tmuxWindowPaneIndex, tmuxClientName, triggerName, autoName, badge, username, pid, jobPid, effective_root_pid, sshIntegrationLevel, terminalWindowName, creationTimeString, commandLine, applicationKeypad, tab, tab.tmuxWindowName, tab.tmuxWindowTitle, iterm2, parentSession, isHotkeyWindow, currentTab, currentTab.currentSession.pid, currentTab.currentSession.mouseInfo, currentTab.currentSession.termid, currentTab.currentSession.terminalWindowName, currentTab.currentSession.terminalIconName, currentTab.currentSession.processTitle
 
 ---
 
-## Установка на новой машине
+## Installing on a New Machine
 
-### Способ 1: через defaults (полный импорт)
+### Method 1: via defaults (full import)
 
 ```bash
-# Экспортируй текущий (бэкап)
+# Export current (backup)
 defaults read /Users/vk/Library/Preferences/com.googlecode.iterm2 \
   > ~/iterm2-backup-$(date +%Y%m%d).json
 
-# Импортируй новый
+# Import new
 defaults read /path/to/Settings.json > /tmp/iterm2-import.plist
 
-# Сбрось текущий конфиг
+# Reset current config
 defaults delete com.googlecode.iterm2
 
-# Запиши новый
+# Write new
 defaults read /tmp/iterm2-import.plist > /tmp/iterm2-final.plist
 defaults write com.googlecode.iterm2 < /tmp/iterm2-final.plist
 
-# Перезапусти
+# Restart
 killall iTerm2
 ```
 
-### Способ 2: через GUI
+### Method 2: via GUI
 
-1. Открой iTerm2
+1. Open iTerm2
 2. iTerm2 → Settings → General
-3. Перетащи `Settings.json` в окно настроек
-4. Перезапусти iTerm2
+3. Drag `Settings.json` into the settings window
+4. Restart iTerm2
 
-### Способ 3: импорт профиля (только цвета и настройки)
+### Method 3: profile import (colors and settings only)
 
-1. Открой iTerm2 → Settings → Profiles
-2. Выбери профиль
-3. Импортируй `best theme.json` (старый, только профиль)
+1. Open iTerm2 → Settings → Profiles
+2. Select a profile
+3. Import `best theme.json` (old, profile only)
 
 ---
 
-## Заметки
+## Notes
 
-- Файл в формате **Apple Property List** (не стандартный JSON)
-- `Default Bookmark Guid` ссылается на профиль **"best theme"** (GUID: `132AB47A-...`)
-- **"best theme"** — профиль по умолчанию, используется при новом окне
-- **"Default"** — базовый, без кастомизации
-- `Working Directory` установлен на `$HOME` (а не хардкод)
-- **AI настроен**: GPT-5.5 через OpenAI API, 1050000 токенов
-- **Шрифты**: Monaco (Default), InconsolataForPowerline-dz (best theme)
-- **Powerline fonts** должны быть установлены (см. README проекта)
+- File is in **Apple Property List** format (not standard JSON)
+- `Default Bookmark Guid` points to **"best theme"** profile (GUID: `132AB47A-...`)
+- **"best theme"** — default profile, used on new window
+- **"Default"** — basic, uncustomized
+- `Working Directory` is set to `$HOME` (not hardcoded)
+- **AI configured**: GPT-5.5 via OpenAI API, 1050000 tokens
+- **Fonts**: Monaco (Default), InconsolataForPowerline-dz (best theme)
+- **Powerline fonts** must be installed (see project README)
