@@ -72,4 +72,5 @@ Each app `README.md` must contain:
 | Vim | `vim/` | `~/.vimrc`, `~/.vim/` |
 | Ansible | `ansible/` | `~/.ansible/ansible.cfg` |
 | Git | `git/` | `~/.gitconfig` |
+| Zed | `zed/` | `~/.config/zed/settings.json` |
 | YADR | `yadr/` | legacy dotfiles |
