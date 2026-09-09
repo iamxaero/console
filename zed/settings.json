@@ -1,0 +1,174 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "proxy": "",
+  "toolbar": {
+    "code_actions": true
+  },
+  "autosave": "on_focus_change",
+  "disable_ai": false,
+  "diagnostics": {
+    "inline": {
+      "enabled": true
+    }
+  },
+  "restore_on_startup": "last_workspace",
+  "language_models": {
+    "openai_compatible": {
+      "FreeToken": {
+        "api_url": "http://192.168.0.77:1919/v1",
+        "available_models": [
+          {
+            "name": "Qwen3.6-35B-A3B-FP8",
+            "max_tokens": 131072,
+            "max_output_tokens": 16000,
+            "max_completion_tokens": 131072,
+            "capabilities": {
+              "tools": true,
+              "images": true,
+              "parallel_tool_calls": false,
+              "prompt_cache_key": false,
+              "chat_completions": true,
+              "interleaved_reasoning": false,
+              "max_tokens_parameter": false
+            }
+          }
+        ]
+      }
+    },
+    "ollama": {
+      "api_url": "http://localhost:11434",
+      "auto_discover": true,
+      "available_models": [
+        {
+          "name": "qwen3.5:9b-mlx",
+          "max_tokens": 131072,
+          "supports_tools": true,
+          "supports_thinking": true,
+          "supports_images": true
+        }
+      ]
+    }
+  },
+  "icon_theme": "Material Icon Theme",
+  "show_edit_predictions": true,
+  "edit_predictions": {
+    "provider": "ollama",
+    "ollama": {
+      "api_url": "http://localhost:11434"
+    }
+  },
+  "agent_servers": {
+    "Hermes Agent": {
+      "type": "custom",
+      "command": "hermes-acp",
+      "args": []
+    }
+  },
+  "agent": {
+    "show_turn_stats": true,
+    "auto_compact": {
+      "enabled": true
+    },
+    "show_merge_conflict_indicator": true,
+    "thinking_display": "auto",
+    "play_sound_when_agent_done": "always",
+    "sandbox_permissions": {
+        "allow_all_hosts": true,
+        "allow_unsandboxed": true,
+        "network_hosts": []
+    },
+    "message_editor_min_lines": 4,
+    "notify_when_agent_waiting": "primary_screen",
+    "single_file_review": true,
+    "enable_feedback": true,
+    "tool_permissions": {
+      "default": "allow",
+      "tools": {
+        "skill": {
+          "default": "allow"
+        },
+        "search_web": {
+          "default": "allow"
+        },
+        "create_directory": {
+          "default": "confirm"
+        },
+        "move_path": {
+          "default": "allow"
+        },
+        "copy_path": {
+          "default": "confirm"
+        },
+        "delete_path": {
+          "default": "confirm"
+        },
+        "fetch": {
+          "default": "allow"
+        },
+        "edit_file": {
+          "default": "allow"
+        },
+        "write_file": {
+          "default": "confirm"
+        },
+        "terminal": {
+          "default": "allow"
+        }
+      }
+    },
+    "use_modifier_to_send": false,
+    "default_profile": "write",
+    "profiles": {},
+    "default_model": {
+      "provider": "FreeToken",
+      "model": "Qwen3.6-35B-A3B-FP8",
+      "enable_thinking": false,
+      "max_tokens": 131072
+    },
+    "dock": "right",
+    "favorite_models": [
+      {
+        "provider": "ollama",
+        "model": "qwen3.6:27b-q4_K_M",
+        "enable_thinking": true
+      },
+      {
+        "provider": "FreeToken",
+        "model": "Qwen3.6-35B-A3B-FP8",
+        "enable_thinking": true
+      }
+    ],
+    "model_parameters": [
+      {
+        "provider": "FreeToken",
+        "model": "Qwen3.6-35B-A3B-FP8",
+        "max_tokens": 131072
+      }
+    ]
+  },
+  "project_panel": {
+    "hide_gitignore": false,
+    "dock": "left"
+  },
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false,
+    "anthropic_retention": false
+  },
+  "base_keymap": "Zed",
+  "ui_font_size": 16,
+  "buffer_font_size": 15,
+  "theme": "Gruvbox Dark",
+  "terminal": {
+    "shell": {
+      "program": "/bin/zsh"
+    }
+  }
+}

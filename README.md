@@ -16,6 +16,7 @@
 | **Vim** (legacy) | [vim/](vim/) | .vimrc, Vundle, бэквёрд-совместимость |
 | **Ansible** | [ansible/](ansible/) | ansible.cfg, vault, inventory, roles |
 | **Git** | [git/](git/) | .gitconfig, ~60 алиасов, rebase workflow |
+| **Zed** | [zed/](zed/) | settings.json: Ollama, FreeToken, Hermes Agent, agent tool permissions |
 | **YADR** | [yadr/](yadr/) | Legacy dotfiles (Prezto, Vundle, Tmux) |
 
 ## Quick Start
@@ -40,9 +41,10 @@ cd console && cat <app>/README.md
 10. [Classic Vim (legacy)](#10-classic-vim-legacy)
 11. [Ansible](#11-ansible)
 12. [Golang](#12-golang)
-13. [SSH](#13-ssh)
-14. [Git](#14-git)
-15. [Summary — checklist](#summary---checklist)
+13. [Git](#13-git)
+14. [SSH](#14-ssh)
+15. [Zed](#15-zed)
+16. [Summary — checklist](#16-summary---checklist)
 
 > **Tip:** For details on each application, see its directory:
 > - [Shell](shell/README.md)
@@ -381,7 +383,7 @@ mkdir -p ~/.go
 
 > GOPATH is set to `~/.go` (configured in `.zshrc`).
 
-## 14. Git
+## 13. Git
 
 ### Install config
 
@@ -408,12 +410,11 @@ ln -sf $(pwd)/console/git/gitconfig ~/.gitconfig
 
 > **Note:** `.gitconfig` is a full DevOps engineer config. Email/name/keys must be adapted to your own.
 
-## 15. SSH
+## 14. SSH
 
 ### Keys
 
 SSH key addition is configured in `.zshrc`:
-
 1. `~/.ssh/id_ed25519` (priority)
 2. `~/.ssh/id_rsa` (fallback)
 
@@ -428,7 +429,30 @@ ssh-keygen -t ed25519 -C "devops@example.com"
 # Add public key to GitHub, GitLab, etc.
 ```
 
-## Summary — checklist
+## 15. Zed
+
+See: [zed/README.md](zed/README.md)
+
+### Install
+
+```bash
+brew install --cask zed
+
+# Symlink
+ln -sf $(pwd)/console/zed/settings.json ~/.config/zed/settings.json
+```
+
+### Key settings
+
+| Setting | Value |
+|---|---|
+| Theme | `Gruvbox Dark` |
+| Icon Theme | `Material Icon Theme` |
+| Default Model | `Qwen3.6-35B-A3B-FP8` (FreeToken) |
+| Edit Predictions | Ollama (localhost:11434) |
+| Hermes Agent | hermes-acp |
+
+## 16. Summary — checklist
 
 | # | Step | Command | Status |
 |---|---|---|---|
@@ -448,7 +472,8 @@ ssh-keygen -t ed25519 -C "devops@example.com"
 | 14 | Ansible | `brew install ansible`, symlink config, create `~/.vault_pass` | ☐ |
 | 15 | Golang | `mkdir -p ~/.go` | ☐ |
 | 16 | Git | `ln -sf console/git/gitconfig ~/.gitconfig` | ☐ |
-| 17 | SSH keys | Create/copy keys, add to agent | ☐ |
+| 17 | Zed | `brew install --cask zed`, symlink settings.json | ☐ |
+| 18 | SSH keys | Create/copy keys, add to agent | ☐ |
 
 ---
 
@@ -503,6 +528,10 @@ mkdir -p ~/.go
 
 # 14. Git
 ln -sf $(pwd)/console/git/gitconfig ~/.gitconfig
+
+# 15. Zed
+brew install --cask zed
+ln -sf $(pwd)/console/zed/settings.json ~/.config/zed/settings.json
 
 echo "Done! Restart terminal."
 ```
