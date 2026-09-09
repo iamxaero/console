@@ -54,7 +54,7 @@ plugins=(
   command-not-found
   zsh-autosuggestions
   zsh-syntax-highlighting
-  zsh-colorize
+  colorize
   history-substring-search
   helm
   iterm2
@@ -83,4 +83,3 @@ if [[ -f "$HOME/.ssh/id_ed25519" ]]; then
 elif [[ -f "$HOME/.ssh/id_rsa" ]]; then
   ssh-add ~/.ssh/id_rsa
 fi
-

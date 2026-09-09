@@ -104,7 +104,7 @@ See: [shell/zsh/README.md](shell/zsh/README.md)
 |---|---|
 | Theme | `agnoster` |
 | ZSH_DISABLE_COMPFIX | `true` |
-| Plugins | aws, golang, git, gitfast, macos, command-not-found, zsh-autosuggestions, zsh-syntax-highlighting, zsh-colorize, history-substring-search, helm, iterm2, kubectl, jsontools, ansible, github, sudo, terraform, thefuck, docker, docker-compose, zsh-interactive-cd, zsh-navigation-tools, uv |
+| Plugins | aws, golang, git, gitfast, macos, command-not-found, zsh-autosuggestions, zsh-syntax-highlighting, colorize, history-substring-search, helm, iterm2, kubectl, jsontools, ansible, github, sudo, terraform, thefuck, docker, docker-compose, zsh-interactive-cd, zsh-navigation-tools, uv |
 | PATH | `$HOME/.local/bin`, `/usr/local/bin`, `/usr/local/sbin`, `/opt/homebrew/bin`, `/opt/local/bin`, `/opt/local/sbin`, `$HOME/bin` |
 | Locale | `en_US.UTF-8` |
 

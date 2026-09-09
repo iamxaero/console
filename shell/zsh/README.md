@@ -29,7 +29,16 @@ ln -sf $(pwd)/console/shell/zsh/.zshrc ~/.zshrc
 
 ### Plugins (23 total)
 
-aws, golang, git, gitfast, macos, command-not-found, zsh-autosuggestions, zsh-syntax-highlighting, zsh-colorize, history-substring-search, helm, iterm2, kubectl, jsontools, ansible, github, sudo, terraform, thefuck, docker, docker-compose, zsh-interactive-cd, zsh-navigation-tools, uv
+aws, golang, git, gitfast, macos, command-not-found, zsh-autosuggestions, zsh-syntax-highlighting, colorize, history-substring-search, helm, iterm2, kubectl, jsontools, ansible, github, sudo, terraform, thefuck, docker, docker-compose, zsh-interactive-cd, zsh-navigation-tools, uv
+
+### SSH auto-loading
+
+All private keys in `~/.ssh/` are loaded into ssh-agent automatically.
+
+```bash
+# Supported key types: id_rsa, id_ed25519, id_ecdsa
+# Public keys (.pub) are skipped
+```
 
 ### Python aliases
 
