@@ -25,7 +25,7 @@ description: >
 - [ ] <task description>
 ```
 
-3. **Ask for approval before executing.** Show the plan. Wait for user OK.
+3. **Ask for approval before executing. Show the plan. DO NOT start executing — wait for the user to explicitly write `ok`.** The plan is NOT approved until the user says "ok". Showing the plan is NOT the same as approval.
 
 4. **Execute one task at a time.** After finishing each:
    - Verify it works (tests, file check, etc.)
