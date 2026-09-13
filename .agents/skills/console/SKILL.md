@@ -24,6 +24,7 @@ description: >
 - **Every app must have README.md** — with setup instructions that work on a fresh system
 - **Rollback** — to undo: `rm ~/.<config>` then remove symlink
 - **README Always** — when making any config change: read the app's `README.md`, update it if something changed, update root `README.md`
+- **Always check cwd** — before any terminal command, verify you are in the correct working directory (`$HOME/github/console` for project files). Use `cd` parameter or explicit `cd` in command.
 
 ## Adding a new app
 
