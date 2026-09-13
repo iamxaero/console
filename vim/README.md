@@ -25,7 +25,7 @@ ln -sf $(pwd)/console/vim ~/.vim
 vim/
 ├── .vimrc              # Main config (sources vundles.vim + base.vim)
 ├── vundles.vim         # Vundle plugin definitions (broken down by category)
-├── base.vim            # Common settings for vim and neovim
+├── base.vim            # Common settings for vim and neovim (shared with neovim/base.vim)
 ├── ruby.vundle         # Ruby plugins
 ├── languages.vundle    # Language packs
 ├── git.vundle          # Git tools

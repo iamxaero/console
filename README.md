@@ -17,7 +17,6 @@
 | **Ansible** | [ansible/](ansible/) | ansible.cfg, vault, inventory, roles |
 | **Git** | [git/](git/) | .gitconfig, ~60 алиасов, rebase workflow |
 | **Zed** | [zed/](zed/) | settings.json: Ollama, FreeToken, Hermes Agent, agent tool permissions |
-| **YADR** | [yadr/](yadr/) | Legacy dotfiles (Prezto, Vundle, Tmux) |
 
 ## Quick Start
 
@@ -485,6 +484,8 @@ For quick re-setup, everything can be assembled into a single script:
 #!/bin/bash
 set -e
 
+CONSOLE="$HOME/github/console"
+
 # 1-2. Xcode + Homebrew
 xcode-select --install
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -497,9 +498,9 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/p
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 
 # 5-6. Symlinks + fonts
-ln -sf $(pwd)/console/shell/zsh/.zshrc ~/.zshrc
-ln -sf $(pwd)/console/shell/.inputrc ~/.inputrc
-ln -sf $(pwd)/console/shell/bash/.bashrc ~/.bashrc
+ln -sf "$CONSOLE/shell/zsh/.zshrc" ~/.zshrc
+ln -sf "$CONSOLE/shell/.inputrc" ~/.inputrc
+ln -sf "$CONSOLE/shell/bash/.bashrc" ~/.bashrc
 
 git clone https://github.com/powerline/fonts.git --depth=1
 cd fonts && ./install.sh && cd .. && rm -rf fonts
@@ -511,27 +512,27 @@ uv python pin --global 3.14
 
 # 9. Neovim
 brew install neovim
-ln -sf $(pwd)/console/neovim ~/.config/nvim
+ln -sf "$CONSOLE/neovim" ~/.config/nvim
 
 # 10-11. Vim + Vundle
 brew install vim
-ln -sf $(pwd)/console/vim/.vimrc ~/.vimrc
-ln -sf $(pwd)/console/vim ~/.vim
+ln -sf "$CONSOLE/vim/.vimrc" ~/.vimrc
+ln -sf "$CONSOLE/vim" ~/.vim
 
 # 12. Ansible
 brew install ansible
 mkdir -p ~/.ansible
-ln -sf $(pwd)/console/ansible/ansible.cfg ~/.ansible/ansible.cfg
+ln -sf "$CONSOLE/ansible/ansible.cfg" ~/.ansible/ansible.cfg
 
 # 13. Golang
 mkdir -p ~/.go
 
 # 14. Git
-ln -sf $(pwd)/console/git/gitconfig ~/.gitconfig
+ln -sf "$CONSOLE/git/gitconfig" ~/.gitconfig
 
 # 15. Zed
 brew install --cask zed
-ln -sf $(pwd)/console/zed/settings.json ~/.config/zed/settings.json
+ln -sf "$CONSOLE/zed/settings.json" ~/.config/zed/settings.json
 
 echo "Done! Restart terminal."
 ```

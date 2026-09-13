@@ -94,7 +94,7 @@ Main working profile — dark theme, custom palette, keyboard mappings.
 | **Non-ASCII Font** | Menlo-Regular 11 |
 | **Cols / Rows** | 176 / 40 |
 | **Scrollback** | 1000 |
-| **Working Directory** | `/Users/xaero` |
+| **Working Directory** | `/Users/vk` |
 | **Terminal Type** | xterm-256color |
 | **Transparency** | 0 |
 | **Visual Bell** | 1 |

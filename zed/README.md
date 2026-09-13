@@ -80,14 +80,13 @@ which hermes-acp
 ### Шаг 5: Подключить конфиг из проекта
 
 ```bash
-# Перейти в проект (если ещё не там)
-cd ~/github/console
+CONSOLE="$HOME/github/console"
 
 # Удалить существующий конфиг (если есть)
 rm -f ~/.config/zed/settings.json
 
 # Создать симлинк на проект
-ln -sf $(pwd)/console/zed/settings.json ~/.config/zed/settings.json
+ln -sf "$CONSOLE/zed/settings.json" ~/.config/zed/settings.json
 
 # Проверить
 ls -la ~/.config/zed/settings.json
@@ -218,7 +217,7 @@ CONSOLE_DIR="$HOME/github/console"
 # git clone https://github.com/iamxaero/console.git ~/github/console
 
 rm -f ~/.config/zed/settings.json
-ln -sf "$CONSOLE_DIR/console/zed/settings.json" ~/.config/zed/settings.json
+ln -sf "$CONSOLE_DIR/zed/settings.json" ~/.config/zed/settings.json
 
 echo "✅ Zed setup complete. Restart Zed."
 ```
