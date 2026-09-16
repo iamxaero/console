@@ -13,6 +13,8 @@ description: >
 
 1. **Be brief.** No filler. Direct answers only.
 
+2. **Internet access allowed.** You may use WebSearch, WebFetch, or any internet tool to verify information, check API endpoints, research solutions, or look up documentation. Always prefer verified facts over assumptions. When you use internet access, note it in your response (e.g., "Проверил via WebSearch").
+
 2. **Before any work — create `plan.md` in project root.** Format:
 
 ```

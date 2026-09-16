@@ -83,3 +83,11 @@ if [[ -f "$HOME/.ssh/id_ed25519" ]]; then
 elif [[ -f "$HOME/.ssh/id_rsa" ]]; then
   ssh-add ~/.ssh/id_rsa
 fi
+
+# Claude agent settings
+export ANTHROPIC_BASE_URL="http://192.168.0.77:1919"
+export ANTHROPIC_AUTH_TOKEN="local"
+export ANTHROPIC_MODEL="Qwen3.6-35B-A3B-FP8"
+
+# export CLAUDE_CODE_MAX_CONTEXT_TOKENS=128000
+export CLAUDE_CODE_DISABLE_UNKNOWN_MODEL_WINDOW_ENFORCEMENT=1
