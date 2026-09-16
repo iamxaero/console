@@ -11,7 +11,7 @@ description: >
 
 ## 4 Principles
 
-1. **App-first dirs** — create directories named after the app (shell/, neovim/, etc), avoid deep nesting.
+1. **App-first dirs** — create directories named after the app (shell/, neovim/, claude/, etc), avoid deep nesting.
 2. **Symlinks, not copies** — store configs in `console/`, create `ln -sf` on the machine, one source of truth.
 3. **README-driven setup** — every app directory must have a `README.md` with a complete setup guide.
 4. **Single source of truth** — one config per file, no duplication.
@@ -74,4 +74,5 @@ Each app `README.md` must contain:
 | Ansible | `ansible/` | `~/.ansible/ansible.cfg` |
 | Git | `git/` | `~/.gitconfig` |
 | Zed | `zed/` | `~/.config/zed/settings.json` |
+| Claude Code | `claude/` | `~/.claude/settings.json` |
 | YADR | `yadr/` | legacy dotfiles |

@@ -17,6 +17,7 @@
 | **Ansible** | [ansible/](ansible/) | ansible.cfg, vault, inventory, roles |
 | **Git** | [git/](git/) | .gitconfig, ~60 алиасов, rebase workflow |
 | **Zed** | [zed/](zed/) | settings.json: Ollama, FreeToken, Hermes Agent, agent tool permissions |
+| **Claude Code** | [claude/](claude/) | settings.json: hooks (iTerm2), granular permissions (git, docker, kubectl), deny (force push, rm -rf) |
 
 ## Quick Start
 
@@ -43,7 +44,8 @@ cd console && cat <app>/README.md
 13. [Git](#13-git)
 14. [SSH](#14-ssh)
 15. [Zed](#15-zed)
-16. [Summary — checklist](#16-summary---checklist)
+16. [Claude Code](#16-claude-code)
+17. [Summary — checklist](#17-summary---checklist)
 
 > **Tip:** For details on each application, see its directory:
 > - [Shell](shell/README.md)
@@ -451,7 +453,38 @@ ln -sf $(pwd)/console/zed/settings.json ~/.config/zed/settings.json
 | Edit Predictions | Ollama (localhost:11434) |
 | Hermes Agent | hermes-acp |
 
-## 16. Summary — checklist
+## 16. Claude Code
+
+See: [claude/README.md](claude/README.md)
+
+### Installation
+
+```bash
+# Install via npm
+npm install -g @anthropic-ai/claude-code
+
+# Symlink config
+ln -sf $(pwd)/console/claude/settings.json ~/.claude/settings.json
+```
+
+### Key settings
+
+| Setting | Value |
+|---|---|
+| `theme` | `auto` |
+| **Hooks** | iTerm2 cc-status for all events (Notification, SessionStart, SessionEnd, etc.) |
+| **allow** | `Edit`, `Write` |
+| **ask** | Bash: argocd, docker, flux, gh, git branch/checkout/commit/push/rebase/reset/tag, glab, helm, kubectl, mv, op, rm, rmdir, terraform, terragrunt, vault |
+| **deny** | `Bash(git push --force:*)`, `Bash(rm -rf:*)` |
+
+### UserPromptSubmit Protocol
+
+Before every answer, Claude Code:
+1. Checks skills in `~/Documents/git/.agent/skills/` — reads `SKILL.md` if topic matches
+2. Labels every claim: **verified** (file/line/log) vs **assumption**
+3. If it's a question — answers first, no commands before the answer
+
+## 17. Summary — checklist
 
 | # | Step | Command | Status |
 |---|---|---|---|
@@ -472,7 +505,8 @@ ln -sf $(pwd)/console/zed/settings.json ~/.config/zed/settings.json
 | 15 | Golang | `mkdir -p ~/.go` | ☐ |
 | 16 | Git | `ln -sf console/git/gitconfig ~/.gitconfig` | ☐ |
 | 17 | Zed | `brew install --cask zed`, symlink settings.json | ☐ |
-| 18 | SSH keys | Create/copy keys, add to agent | ☐ |
+| 18 | Claude Code | `npm install -g @anthropic-ai/claude-code`, symlink settings.json | ☐ |
+| 19 | SSH keys | Create/copy keys, add to agent | ☐ |
 
 ---
 
@@ -533,6 +567,10 @@ ln -sf "$CONSOLE/git/gitconfig" ~/.gitconfig
 # 15. Zed
 brew install --cask zed
 ln -sf "$CONSOLE/zed/settings.json" ~/.config/zed/settings.json
+
+# 16. Claude Code
+npm install -g @anthropic-ai/claude-code
+ln -sf "$CONSOLE/claude/settings.json" ~/.claude/settings.json
 
 echo "Done! Restart terminal."
 ```
