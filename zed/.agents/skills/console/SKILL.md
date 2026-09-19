@@ -1,78 +1,258 @@
 ---
+
 name: console
 description: >
-  Workflow for managing DevOps configs: add, edit, or install app configurations.
-  Use when setting up shell, neovim, vim, ansible, git, iterm2, or adding a new app.
----
+Manage the user's DevOps and developer-tool configuration repository.
+Use when adding, editing, installing, linking, or troubleshooting configurations
+for shell, Neovim, Vim, Ansible, Git, iTerm2, Zed, Claude Code, or other apps.
+------------------------------------------------------------------------------
 
-# Console — AI Workflow
+# Console Configuration Workflow
 
-> All skill content is in English.
+Manage application configurations with a repository-first, single-source-of-truth workflow.
 
-## 4 Principles
+## 1. Core principles
 
-1. **App-first dirs** — create directories named after the app (shell/, neovim/, claude/, etc), avoid deep nesting.
-2. **Symlinks, not copies** — store configs in `console/`, create `ln -sf` on the machine, one source of truth.
-3. **README-driven setup** — every app directory must have a `README.md` with a complete setup guide.
-4. **Single source of truth** — one config per file, no duplication.
+1. **Repository first** — configuration files are maintained in the `console` repository.
+2. **Single source of truth** — do not maintain duplicate copies of the same configuration.
+3. **Symlinks over copies** — when an application supports filesystem-based configuration, link the machine configuration to the repository.
+4. **App-oriented structure** — each application has its own directory directly under `console/`.
+5. **Document reproducibility** — each application should have enough documentation to reproduce its setup on a new machine.
+6. **Protect existing state** — never overwrite a real machine configuration without inspecting it first.
 
-## Rules
+## 2. Repository structure
 
-- **Store configs in `console/<app>/`** — never copy files to `~/.config/` or elsewhere
-- **Always symlink** — `ln -sf $(pwd)/console/<app>/<config> ~/.<config>`
-- **Never duplicate** — one config per file, symlink everywhere it's needed
-- **Every app must have README.md** — with setup instructions that work on a fresh system
-- **Rollback** — to undo: `rm ~/.<config>` then remove symlink
-- **README Always** — when making any config change: read the app's `README.md`, update it if something changed, update root `README.md`
-- **Always check cwd** — before any terminal command, verify you are in the correct working directory (`$HOME/github/console` for project files). Use `cd` parameter or explicit `cd` in command.
+Expected repository:
 
-## Adding a new app
+```text
+~/github/console/
+├── README.md
+├── <app>/
+│   ├── README.md
+│   └── <config files>
+└── ...
+```
 
-1. Create `console/<app>/` directory
-2. Create `console/<app>/README.md` (see README.md Structure below)
-3. Add config files to `console/<app>/`
-4. Update root README.md (apps table)
-5. Symlink: `ln -sf $(pwd)/console/<app>/<config> ~/.<config>`
+Examples:
 
-## Editing an existing app config
+```text
+console/
+├── shell/
+├── neovim/
+├── vim/
+├── ansible/
+├── git/
+├── iterm2/
+├── zed/
+├── claude/
+└── yadr/
+```
 
-1. Read `console/<app>/README.md` — understand current setup
-2. Read the config files in `console/<app>/`
-3. Make changes to the config files
-4. Re-read `console/<app>/README.md` — if the config changed, update the README
-5. Update root `README.md` if the app's section/parameters changed
-6. Symlink updated config: `ln -sf $(pwd)/console/<app>/<config> ~/.<config>`
+Use the actual repository structure as the source of truth. Do not assume an app directory exists.
 
-## README.md Structure
+## 3. Working directory
 
-Each app `README.md` must contain:
+The console repository is normally:
 
-- **Overview** — what the app is, description
-- **Prerequisites** — `brew install ...`, versions
-- **Environment Setup** — step-by-step commands, environment variables
-- **Configuration** — config files, key parameters, table
-- **Symlinks** — which symlinks to create, where they point
-- **Troubleshooting** — common issues, how to rollback
+```text
+~/github/console
+```
 
-## Installing/Configuring local machine
+Before modifying repository files:
 
-1. Read root `README.md` — overview of all apps
-2. Pick the app to install (e.g. `neovim`)
-3. Read `console/<app>/README.md` — detailed setup instructions
-4. Follow installation steps (brew install, etc.)
-5. Create symlinks (see Rules section)
-6. Test: restart terminal / open app and verify
+* use the correct working directory explicitly;
+* prefer the tool's `cwd`/working-directory parameter when available;
+* otherwise use an explicit `cd`;
+* do not rely on the shell's current directory.
 
-## Apps Quick Reference
+For machine-level commands, distinguish clearly between:
 
-| App | Dir | Symlink |
-|---|---|---|
-| Shell | `shell/` | `~/.zshrc`, `~/.bashrc` |
-| iTerm2 | `iterm2/` | Settings import via GUI |
-| Neovim | `neovim/` | `~/.config/nvim` |
-| Vim | `vim/` | `~/.vimrc`, `~/.vim/` |
-| Ansible | `ansible/` | `~/.ansible/ansible.cfg` |
-| Git | `git/` | `~/.gitconfig` |
-| Zed | `zed/` | `~/.config/zed/settings.json` |
-| Claude Code | `claude/` | `~/.claude/settings.json` |
-| YADR | `yadr/` | legacy dotfiles |
+```text
+repository state
+    ~/github/console/...
+
+machine state
+    ~/.config/...
+    ~/.<file>
+```
+
+Never confuse the two.
+
+## 4. Existing configuration
+
+Before installing or linking a configuration:
+
+1. Inspect the destination.
+2. Determine whether it is:
+
+   * absent;
+   * already a symlink;
+   * a symlink to the expected repository file;
+   * a symlink to another location;
+   * a real file or directory.
+3. Never overwrite a real configuration without inspecting it.
+4. Preserve or back up user configuration when necessary.
+5. Prefer making the repository the source of truth.
+
+If the existing machine configuration contains changes not present in the repository, compare them before replacing it.
+
+## 5. Symlinks
+
+Use symlinks whenever the application supports them.
+
+Example:
+
+```bash
+ln -sf "$HOME/github/console/<app>/<config>" "<destination>"
+```
+
+Verify the resulting link:
+
+```bash
+readlink "<destination>"
+```
+
+For directory-based configurations:
+
+```bash
+ln -sfn "$HOME/github/console/<app>/<directory>" "<destination>"
+```
+
+Do not blindly remove destination directories. Inspect them first.
+
+## 6. Adding a new application
+
+1. Create `console/<app>/`.
+2. Add the required configuration files.
+3. Create `console/<app>/README.md`.
+4. Document prerequisites and setup.
+5. Add the application to the root `README.md`.
+6. Create the required symlink or documented application integration.
+7. Verify the application reads the repository configuration.
+
+Do not add an app-specific directory deeper than necessary unless the application requires it.
+
+## 7. Editing an existing configuration
+
+1. Read `console/<app>/README.md` when it exists.
+2. Inspect the relevant configuration.
+3. Identify dependencies and references.
+4. Modify the repository configuration.
+5. Validate the configuration.
+6. Verify the machine symlink still points to the repository.
+7. Update documentation when behavior, parameters, prerequisites, or setup changed.
+8. Update the root `README.md` only when the application inventory or its documented high-level behavior changed.
+
+Do not update documentation merely because an internal formatting or implementation detail changed.
+
+## 8. Installing on a new machine
+
+1. Read the root `README.md`.
+2. Identify the application.
+3. Read `console/<app>/README.md`.
+4. Check prerequisites and installed versions.
+5. Install missing dependencies.
+6. Inspect existing machine configuration.
+7. Create symlinks or perform the documented application-specific integration.
+8. Start/reload the application.
+9. Verify the configuration is actually being used.
+
+Do not assume that creating a symlink proves the application loaded the configuration.
+
+## 9. Application-specific integrations
+
+Not every application uses a simple symlink.
+
+Examples:
+
+* iTerm2 may require GUI import or application-specific settings.
+* Some applications use directories rather than individual files.
+* Some applications may generate or modify configuration automatically.
+
+Follow the application's documented integration method when a symlink is not appropriate.
+
+Do not force the symlink model when it conflicts with the application's configuration mechanism.
+
+## 10. README requirements
+
+Each maintained application should have:
+
+* **Overview**
+* **Prerequisites**
+* **Installation / Environment Setup**
+* **Configuration**
+* **Integration or Symlinks**
+* **Verification**
+* **Troubleshooting**
+* **Rollback**
+
+Keep documentation executable: commands should be usable on a fresh machine after prerequisites are satisfied.
+
+Avoid documenting information that is already obvious from the configuration unless it is important for setup or troubleshooting.
+
+## 11. Rollback
+
+Before destructive configuration changes:
+
+1. Identify the current destination and its type.
+2. Preserve the previous configuration when it contains user changes.
+3. Remove only the repository integration being changed.
+4. Restore the previous state when required.
+5. Verify the application configuration afterward.
+
+Never use a generic `rm` command against an unknown configuration path.
+
+## 12. Validation
+
+Verification should match the application.
+
+Examples:
+
+```text
+Shell       → start a clean shell / syntax check
+Git         → git config --list / targeted validation
+Neovim      → start Neovim and check configuration
+Claude Code → validate settings JSON
+Zed         → validate JSON and launch/check settings
+Ansible     → ansible-config dump / syntax validation
+iTerm2      → verify imported settings
+```
+
+Use the smallest meaningful verification.
+
+Do not claim a configuration works merely because a file exists or a symlink was created.
+
+## 13. Context discipline
+
+* Read only the relevant app configuration.
+* Do not dump entire configuration directories into context.
+* Use targeted searches for large files.
+* Do not repeatedly read unchanged README/configuration.
+* Prefer focused validation commands.
+* Avoid unnecessary installation or diagnostic commands.
+* Keep command output small.
+
+## 14. Safety
+
+* Never commit secrets, tokens, credentials, private keys, or machine-specific sensitive data.
+* Inspect unknown files before deleting or replacing them.
+* Do not silently modify unrelated applications.
+* Do not upgrade dependencies or applications unless requested or required.
+* Do not change machine-level configuration when the task only requires repository changes.
+* For destructive or potentially irreversible operations, verify the target first.
+
+## 15. Quick reference
+
+| App         | Repository directory | Typical integration           |
+| ----------- | -------------------- | ----------------------------- |
+| Shell       | `shell/`             | `~/.zshrc`, `~/.bashrc`       |
+| iTerm2      | `iterm2/`            | GUI/settings integration      |
+| Neovim      | `neovim/`            | `~/.config/nvim`              |
+| Vim         | `vim/`               | `~/.vimrc`, `~/.vim/`         |
+| Ansible     | `ansible/`           | `~/.ansible/ansible.cfg`      |
+| Git         | `git/`               | `~/.gitconfig`                |
+| Zed         | `zed/`               | `~/.config/zed/settings.json` |
+| Claude Code | `claude/`            | `~/.claude/settings.json`     |
+| YADR        | `yadr/`              | legacy dotfiles               |
+
+Treat this table as a convenience reference; verify actual paths in the application README before making changes.
