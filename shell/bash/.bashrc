@@ -34,12 +34,17 @@ alias pip3="uv run python -m pip"
 # ------------------------------------
 # SSH
 # ------------------------------------
-eval "$(ssh-agent)" >/dev/null
-if [[ -f "$HOME/.ssh/id_ed25519" ]]; then
-  ssh-add ~/.ssh/id_ed25519
-elif [[ -f "$HOME/.ssh/id_rsa" ]]; then
-  ssh-add ~/.ssh/id_rsa
+# Start ssh-agent if not already forwarded
+if [[ -z "$SSH_AUTH_SOCK" ]]; then
+    eval "$(ssh-agent -s)" >/dev/null
 fi
+for key in ~/.ssh/*; do
+    [[ -f "$key" ]] || continue
+    [[ "$key" == *.pub ]] && continue
+    [[ "$key" == */config ]] && continue
+    [[ "$key" == */known_hosts* ]] && continue
+    ssh-add "$key" 2>/dev/null
+done
 
 # ------------------------------------
 # Git Aliases
