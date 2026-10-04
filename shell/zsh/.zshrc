@@ -77,12 +77,17 @@ source $ZSH/oh-my-zsh.sh
 # ------------------------------------
 # SSH
 # ------------------------------------
-eval "$(ssh-agent)" >/dev/null
-if [[ -f "$HOME/.ssh/id_ed25519" ]]; then
-  ssh-add ~/.ssh/id_ed25519
-elif [[ -f "$HOME/.ssh/id_rsa" ]]; then
-  ssh-add ~/.ssh/id_rsa
+# Start ssh-agent if it is not running
+if [[ -z "$SSH_AUTH_SOCK" ]]; then
+    eval "$(ssh-agent -s)" >/dev/null
 fi
+for key in ~/.ssh/*; do
+    [[ -f "$key" ]] || continue
+    [[ "$key" == *.pub ]] && continue
+    [[ "$key" == */config ]] && continue
+    [[ "$key" == */known_hosts* ]] && continue
+    ssh-add "$key" 2>/dev/null
+done
 
 # Claude agent settings
 export ANTHROPIC_BASE_URL="http://192.168.0.77:1919"
@@ -95,4 +100,3 @@ export ANTHROPIC_MODEL="Qwen3.6-35B-A3B-NVFP4"
 export CLAUDE_CODE_MAX_CONTEXT_TOKENS=262144
 export CLAUDE_CODE_MAX_OUTPUT_TOKENS=32768
 export CLAUDE_AUTOCOMPACT_PCT_OVERRIDE=70
-
